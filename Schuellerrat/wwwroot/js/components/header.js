@@ -82,7 +82,7 @@ class Header extends HTMLElement {
                         <nav id="mainnav" class="mainnav">
                             <ul class="menu">
                                 <li class="home">
-                                    <a href="index.html">Home</a>
+                                    <a href="/">Home</a>
                                 </li>
                                 <li class="has-sub">
                                     <a href="/CoursesGrid">Courses</a>
