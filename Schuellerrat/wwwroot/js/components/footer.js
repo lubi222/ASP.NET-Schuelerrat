@@ -5,7 +5,7 @@ class Footer extends HTMLElement {
 
 	connectedCallback() {
 		this.innerHTML = `
-        <footer class="footer">
+        <footer class="footer" style="position: relative;">
 				<div class="footer-widgets">
 					<div class="container">
 						<div class="row">
