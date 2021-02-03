@@ -15,16 +15,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\AboutUs\" />
-    <Folder Include="Views\CoursesGrid\" />
-    <Folder Include="Views\CoursesGridSidebar\" />
-    <Folder Include="Views\CoursesListSidebar\" />
-    <Folder Include="Views\CoursesSingle\" />
-    <Folder Include="Views\Team\" />
-    <Folder Include="Views\Contact\" />
-    <Folder Include="Views\BlogSingle\" />
-    <Folder Include="Views\Blog\" />
-  </ItemGroup>
-
 </Project>
