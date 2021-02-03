@@ -42,9 +42,9 @@
     <link rel="stylesheet" type="text/css" href="/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" type="text/css" href="/css/colors/color1.css" id="colors" asp-append-version="true" />
     <link href="/icon/apple-touch-icon-48-precomposed.png" rel="apple-touch-icon-precomposed" sizes="48x48" asp-append-version="true" />
-    <link rel="stylesheet" type="text/css" href="/css/animate.css" asp-append-version="true" />
+    @*<link rel="stylesheet" type="text/css" href="/css/animate.css" asp-append-version="true" />*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.css" asp-append-version="true" />
     @RenderSection("Styles", required: false)
 </head>
@@ -52,10 +52,14 @@
 <body class="header-sticky">
 
     @*<div class="container">*@
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
     @*</div>*@
+
+
+    
+
 
 </body>
 <footer-component></footer-component>
