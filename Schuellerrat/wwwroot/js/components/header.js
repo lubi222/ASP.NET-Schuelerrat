@@ -85,27 +85,27 @@ class Header extends HTMLElement {
                                     <a href="index.html">Home</a>
                                 </li>
                                 <li class="has-sub">
-                                    <a href="courses-grid.html">Courses</a>
+                                    <a href="/CoursesGrid">Courses</a>
                                     <ul class="submenu">
                                         <li>
-                                            <a href="courses-grid.html"
+                                            <a href="/CoursesGrid"
                                                 >Courses grid</a
                                             >
                                         </li>
                                         <li>
                                             <a
-                                                href="courses-grid-sidebar.html"
+                                                href="/CoursesGridSidebar"
                                                 >Courses grid sidebar</a
                                             >
                                         </li>
                                         <li>
                                             <a
-                                                href="courses-list-sidebar.html"
+                                                href="/CoursesListSidebar"
                                                 >Courses list sidebar</a
                                             >
                                         </li>
                                         <li>
-                                            <a href="courses-single.html"
+                                            <a href="/CoursesSingle"
                                                 >Courses single</a
                                             >
                                         </li>
@@ -113,18 +113,18 @@ class Header extends HTMLElement {
                                     <!-- /.submenu -->
                                 </li>
 
-                                <li><a href="about-us.html">About</a></li>
+                                <li><a href="/AboutUs">About</a></li>
 
-                                <li><a href="team.html">Team</a></li>
+                                <li><a href="/Team">Team</a></li>
 
                                 <li>
-                                    <a href="blog.html">Blog</a>
+                                    <a href="/Blog">Blog</a>
                                     <ul class="submenu">
                                         <li>
-                                            <a href="blog.html">Blog</a>
+                                            <a href="/Blog">Blog</a>
                                         </li>
                                         <li>
-                                            <a href="blog-single.html"
+                                            <a href="/BlogSingle"
                                                 >Blog single</a
                                             >
                                         </li>
@@ -132,7 +132,7 @@ class Header extends HTMLElement {
                                     <!-- /.submenu -->
                                 </li>
 
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="/Contact">Contact</a></li>
                             </ul>
                             <!-- /.menu -->
                         </nav>

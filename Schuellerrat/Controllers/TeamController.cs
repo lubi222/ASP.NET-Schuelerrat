@@ -8,5 +8,9 @@ namespace Schuellerrat.Controllers
 {
     public class TeamController : Controller
     {
+        public IActionResult Index()
+        {
+            return this.View();
+        }
     }
 }

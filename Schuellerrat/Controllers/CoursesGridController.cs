@@ -8,5 +8,9 @@ namespace Schuellerrat.Controllers
 {
     public class CoursesGridController : Controller
     {
+        public IActionResult Index()
+        {
+            return this.View();
+        }
     }
 }

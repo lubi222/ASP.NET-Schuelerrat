@@ -8,7 +8,7 @@ namespace Schuellerrat.Controllers
 {
     public class AboutUsController : Controller
     {
-        public IActionResult AboutUs()
+        public IActionResult Index()
         {
             return this.View();
         }
