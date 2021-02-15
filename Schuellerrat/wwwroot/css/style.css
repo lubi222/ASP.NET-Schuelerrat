@@ -2885,7 +2885,7 @@ footer .widget_recent-courses {
         left: 50%;
         transform: translateX(-50%);
         -moz-transform: translateX(-50%);
-        - ms-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
         -o-transform: translateX(-50%);
         padding: 0 30px;
@@ -3006,7 +3006,7 @@ footer .widget_recent-courses {
             text-align: center;
             transform: translateX(-50%);
             -moz-transform: translateX(-50%);
-            - ms-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
             -webkit-transform: translateX(-50%);
             -o-transform: translateX(-50%);
         }
@@ -3057,7 +3057,7 @@ footer .widget_recent-courses {
         position: absolute;
         transform: translate(-50%,-50%);
         -moz-transform: translate(-50%,-50%);
-        - ms-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
         -webkit-transform: translate(-50%,-50%);
         -o-transform: translate(-50%,-50%);
     }
@@ -3116,7 +3116,7 @@ footer .widget_recent-courses {
         left: 50%;
         transform: translateX(-50%);
         -moz-transform: translateX(-50%);
-        - ms-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
         -webkit-transform: translateX(-50%);
         -o-transform: translateX(-50%);
         text-align: center;
