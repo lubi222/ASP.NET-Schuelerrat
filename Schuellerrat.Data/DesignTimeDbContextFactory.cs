@@ -21,8 +21,4 @@
             return new ApplicationDbContext(builder.Options);
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> temp

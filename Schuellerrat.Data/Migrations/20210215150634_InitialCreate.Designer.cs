@@ -10,7 +10,7 @@ using Schuellerrat.Data;
 namespace Schuellerrat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210215123521_InitialCreate")]
+    [Migration("20210215150634_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
