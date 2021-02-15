@@ -15,8 +15,13 @@ namespace Schuellerrat.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+<<<<<<< HEAD
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
+=======
+                .HasAnnotation("ProductVersion", "3.1.11")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+>>>>>>> temp
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -29,18 +34,31 @@ namespace Schuellerrat.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+>>>>>>> temp
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
+<<<<<<< HEAD
                         .HasDatabaseName("RoleNameIndex")
+=======
+                        .HasName("RoleNameIndex")
+>>>>>>> temp
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
@@ -83,8 +101,13 @@ namespace Schuellerrat.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+>>>>>>> temp
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -96,12 +119,21 @@ namespace Schuellerrat.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+>>>>>>> temp
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -119,17 +151,30 @@ namespace Schuellerrat.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+>>>>>>> temp
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
+<<<<<<< HEAD
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
+=======
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+>>>>>>> temp
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
@@ -408,12 +453,15 @@ namespace Schuellerrat.Data.Migrations
                     b.HasOne("Schuellerrat.Data.Event", "Event")
                         .WithMany("Images")
                         .HasForeignKey("EventId");
+<<<<<<< HEAD
 
                     b.Navigation("Achievement");
 
                     b.Navigation("Article");
 
                     b.Navigation("Event");
+=======
+>>>>>>> temp
                 });
 
             modelBuilder.Entity("Schuellerrat.Models.Link", b =>
@@ -434,6 +482,7 @@ namespace Schuellerrat.Data.Migrations
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+<<<<<<< HEAD
 
                     b.Navigation("Article");
                 });
@@ -457,6 +506,8 @@ namespace Schuellerrat.Data.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Paragraphs");
+=======
+>>>>>>> temp
                 });
 #pragma warning restore 612, 618
         }
