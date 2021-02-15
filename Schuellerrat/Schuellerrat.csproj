@@ -180,4 +180,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Schuellerrat.Data\Schuellerrat.Data.csproj" />
+    <ProjectReference Include="..\Schuellerrat.Services\Schuellerrat.Services.csproj" />
+  </ItemGroup>
+
 </Project>
