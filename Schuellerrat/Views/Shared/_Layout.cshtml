@@ -28,15 +28,16 @@
     @RenderSection("Styles", required: false)
 </head>
 
-<body class="header-sticky">
+<body class="">
 
-    <header-component></header-component>
+    <partial name="_HeaderPartial" />
     @*<div class="container">*@
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
     @*</div>*@
-    <footer-component></footer-component>
+    <partial name="_FooterPartial" />
+
 
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <!-- Mobile Specific Metas -->
