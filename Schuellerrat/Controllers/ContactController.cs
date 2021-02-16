@@ -9,6 +9,8 @@ using Schuellerrat.Services;
 
 namespace Schuellerrat.Controllers
 {
+    using Services.EmailSender;
+
     public class ContactController : Controller
     {
         private readonly IEmailSender emailSender;

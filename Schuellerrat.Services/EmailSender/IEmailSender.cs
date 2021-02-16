@@ -1,4 +1,4 @@
-﻿namespace Schuellerrat.Services
+﻿namespace Schuellerrat.Services.EmailSender
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

@@ -1,4 +1,4 @@
-﻿namespace Schuellerrat.Services
+﻿namespace Schuellerrat.Services.EmailSender
 {
     public class EmailAttachment
     {
