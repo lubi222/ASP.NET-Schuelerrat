@@ -11,6 +11,10 @@ using Schuellerrat.Services.Email;
 
 namespace Schuellerrat
 {
+    using AutoMapper;
+    using Data.Seeders;
+    using Services.EmailSender;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -23,6 +27,7 @@ namespace Schuellerrat
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -38,8 +43,17 @@ namespace Schuellerrat
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using var dbContext = app.ApplicationServices.CreateScope().ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            dbContext.Database.Migrate();
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.Migrate();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
+            //new ApplicationDbContextSeeder(new MapperConfiguration(x =>
+            //{
+            //    x.AddProfile(new MappingProfile());
+            //})).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+
 
             if (env.IsDevelopment())
             {
