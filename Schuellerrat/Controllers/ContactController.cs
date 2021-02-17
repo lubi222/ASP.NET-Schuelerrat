@@ -43,14 +43,32 @@ namespace Schuellerrat.Controllers
             var request = new MailRequest()
             {
                 ToEmail = "elidimitrova036@gmail.com",
-                Subject = $"{inputModel.Name} - {inputModel.Grade}th Grade",
-                Body = inputModel.Content,
+                Subject = CreateSubject(inputModel.Name, inputModel.Grade),
+                Body = inputModel.Content + "\n Имейл за обратна връзка:" + inputModel.Email,
             };
 
             await mailService.SendEmailAsync(request);
             return this.Redirect("/Contact/ContactForm");
         }
 
-
+        private string CreateSubject(string name, int? grade)
+        {
+            if (name == null && grade == null)
+            {
+                return "Anonymous";
+            }
+            else if (name == null)
+            {
+                return $"Anonymous - {grade}th Grade";
+            }
+            else if (grade == null)
+            {
+                return $"{name}";
+            }
+            else
+            {
+                return $"{name} - {grade}th Grade";
+            }
+        }
     }
 }
