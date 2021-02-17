@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Schuellerrat.InputModels;
 using Schuellerrat.Services;
+using Schuellerrat.Services.Email;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace Schuellerrat.Controllers
 {
     public class ContactController : Controller
     {
-        private readonly IEmailSender emailSender;
+        private readonly IMailService mailService;
 
-        public ContactController(IEmailSender emailSender)
+        public ContactController(IMailService mailService)
         {
-            this.emailSender = emailSender;
+            this.mailService = mailService;
         }
 
         public IActionResult Index()
@@ -31,10 +34,23 @@ namespace Schuellerrat.Controllers
         [HttpPost]
         public async Task<IActionResult> ContactForm(EmailInputModel inputModel)
         {
-            await this.emailSender.SendEmailAsync(inputModel.From, inputModel.FromName, inputModel.To, inputModel.Subject,
-                inputModel.HtmlContent);
 
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
+            var request = new MailRequest()
+            {
+                ToEmail = "elidimitrova036@gmail.com",
+                Subject = $"{inputModel.Name} - {inputModel.Grade}th Grade",
+                Body = inputModel.Content,
+            };
+
+            await mailService.SendEmailAsync(request);
             return this.Redirect("/Contact/ContactForm");
         }
+
+
     }
 }

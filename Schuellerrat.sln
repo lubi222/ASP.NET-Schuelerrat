@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat", "Schuellerrat\Schuellerrat.csproj", "{586E27EE-FFA5-4FA1-9C43-69C92B013FD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schuellerrat.Data", "Schuellerrat.Data\Schuellerrat.Data.csproj", "{E7683699-F1EE-4E60-8253-A314AB0D6966}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat.Data", "Schuellerrat.Data\Schuellerrat.Data.csproj", "{E7683699-F1EE-4E60-8253-A314AB0D6966}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schuellerrat.Models", "Schuellerrat.Models\Schuellerrat.Models.csproj", "{E72C0AF1-E1FF-42CF-99F5-450E39CCBA7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat.Models", "Schuellerrat.Models\Schuellerrat.Models.csproj", "{E72C0AF1-E1FF-42CF-99F5-450E39CCBA7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schuellerrat.Services", "Schuellerrat.Services\Schuellerrat.Services.csproj", "{0AD26A7B-2B8A-4617-84E4-D2A69407036E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat.Services", "Schuellerrat.Services\Schuellerrat.Services.csproj", "{0AD26A7B-2B8A-4617-84E4-D2A69407036E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A7EA36ED-317C-4A8A-84D6-48B7F3BEBCE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
