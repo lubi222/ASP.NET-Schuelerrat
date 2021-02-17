@@ -4,6 +4,8 @@ using System.Text;
 
 namespace Schuellerrat.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Article
     {
         public Article()
@@ -12,8 +14,10 @@ namespace Schuellerrat.Models
             this.Paragraphs = new HashSet<Paragraph>();
         }
 
+        [Key]
         public int Id { get; set; }
 
+        [Required]
         public string Title { get; set; }
 
         public ICollection<Image> Images { get; set; }

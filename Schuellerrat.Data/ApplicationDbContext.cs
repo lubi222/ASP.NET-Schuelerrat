@@ -20,9 +20,6 @@ namespace Schuellerrat.Data
         {
 
         }
-
-        public DbSet<Event> Events { get; set; }
-        public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Link> Links { get; set; }
