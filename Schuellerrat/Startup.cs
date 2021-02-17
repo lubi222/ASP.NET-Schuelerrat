@@ -13,7 +13,6 @@ namespace Schuellerrat
 {
     using AutoMapper;
     using Data.Seeders;
-    using Services.EmailSender;
 
     public class Startup
     {
