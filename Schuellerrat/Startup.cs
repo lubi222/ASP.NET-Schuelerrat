@@ -1,17 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Schuellerrat.Data;
-
-using Schuellerrat.Services.Email;
-
 namespace Schuellerrat
 {
-    using AutoMapper;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Data;
+    using Services.Email;
     using Data.Seeders;
 
     public class Startup
@@ -48,11 +45,6 @@ namespace Schuellerrat
                 dbContext.Database.Migrate();
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
-            //new ApplicationDbContextSeeder(new MapperConfiguration(x =>
-            //{
-            //    x.AddProfile(new MappingProfile());
-            //})).SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-
 
             if (env.IsDevelopment())
             {

@@ -13,6 +13,9 @@ using SendGrid.Helpers.Mail;
 namespace Schuellerrat.Controllers
 {
 
+
+
+
     public class ContactController : Controller
     {
         private readonly IMailService mailService;
