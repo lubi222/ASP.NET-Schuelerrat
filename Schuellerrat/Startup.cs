@@ -8,8 +8,10 @@ namespace Schuellerrat
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Data;
-    using Services.Email;
     using Data.Seeders;
+    using Services;
+    using Services.EmailService;
+    using Services.EmailService.Email;
 
     public class Startup
     {
@@ -32,6 +34,7 @@ namespace Schuellerrat
             services.AddRazorPages();
 
             services.AddTransient<IMailService, MailService>();
+            services.AddTransient<IClubListService, ClubListService>();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }

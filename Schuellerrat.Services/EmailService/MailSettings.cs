@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Schuellerrat.Services.Email
+﻿namespace Schuellerrat.Services.EmailService
 {
     public class MailSettings
     {

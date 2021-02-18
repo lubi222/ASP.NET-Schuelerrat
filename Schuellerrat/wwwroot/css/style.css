@@ -1084,7 +1084,7 @@ div#header-sticky-wrapper {
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
             float: left;
-            margin: 33px 225px 0 0;
+            margin: 33px 200px 0 0;
         }
 
         .header .header-wrap .nav-wrap {
@@ -1365,7 +1365,7 @@ div#header-sticky-wrapper {
     font-size: 14px;
     color: #999;
     text-decoration: none;
-    padding: 0 0 0 26px;
+    padding: 0 0 0 16px;
     line-height: 50px;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;

@@ -24,6 +24,7 @@ namespace Schuellerrat.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Link> Links { get; set; }
         public DbSet<Paragraph> Paragraphs { get; set; }
+        public DbSet<Club> Clubs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

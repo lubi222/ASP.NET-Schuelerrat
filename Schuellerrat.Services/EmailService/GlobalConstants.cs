@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Schuellerrat.Services
+﻿namespace Schuellerrat.Services.EmailService
 {
     public static  class GlobalConstants
     {

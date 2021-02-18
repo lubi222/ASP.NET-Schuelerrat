@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Mvc;
-using Schuellerrat.InputModels;
-using Schuellerrat.Services;
-using Schuellerrat.Services.Email;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-
-namespace Schuellerrat.Controllers
+﻿namespace Schuellerrat.Controllers
 {
-
-
-
+    using Services.EmailService;
+    using Services.EmailService.Email;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Schuellerrat.InputModels;
 
     public class ContactController : Controller
     {

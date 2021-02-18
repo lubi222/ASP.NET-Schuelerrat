@@ -1,12 +1,11 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Options;
-using MimeKit;
-
-namespace Schuellerrat.Services.Email
+﻿namespace Schuellerrat.Services.EmailService.Email
 {
+    using System.Threading.Tasks;
+    using MailKit.Net.Smtp;
+    using MailKit.Security;
+    using Microsoft.Extensions.Options;
+    using MimeKit;
+
     public class MailService : IMailService
     {
         private readonly MailSettings mailSettings;

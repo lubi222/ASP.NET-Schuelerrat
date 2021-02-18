@@ -11,4 +11,9 @@
     <PackageReference Include="SendGrid" Version="9.22.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Schuellerrat.Data\Schuellerrat.Data.csproj" />
+    <ProjectReference Include="..\Schuellerrat.Models\Schuellerrat.Models.csproj" />
+  </ItemGroup>
+
 </Project>
