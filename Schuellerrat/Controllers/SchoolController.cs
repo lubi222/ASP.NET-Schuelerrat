@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Schuellerrat.Controllers
 {
-    public class CoursesGridSidebarController : Controller
+    public class SchoolController : Controller
     {
         public IActionResult Index()
         {

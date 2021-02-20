@@ -1029,6 +1029,10 @@ ul.curriculum li ul.section-content li.course-lesson {
         margin-right: 0;
     }
 
+.flat-course .course-meta.desc li {
+    margin-right: 2rem;
+}
+
         .flat-course .course-meta.desc li:last-child:after {
             content: none;
         }

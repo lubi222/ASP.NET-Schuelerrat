@@ -3315,7 +3315,7 @@ footer .widget_recent-courses {
     }
 
         .main-content.course-list .flat-course .course-meta.review li {
-            margin-right: 16px;
+            margin-right: 6px;
             float: left;
             padding-top: 1px;
             line-height: 25px;
@@ -3323,7 +3323,7 @@ footer .widget_recent-courses {
         }
 
             .main-content.course-list .flat-course .course-meta.review li.author {
-                margin-right: 37px;
+                margin-right: 7px;
             }
 
         .main-content.course-list .flat-course .course-meta.review .thumb {

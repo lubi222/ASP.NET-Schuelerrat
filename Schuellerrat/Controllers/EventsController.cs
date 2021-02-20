@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Schuellerrat.Controllers
 {
-    public class BlogController : Controller
+    public class EventsController : Controller
     {
         public IActionResult Index()
         {
