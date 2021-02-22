@@ -18,5 +18,7 @@
         
         public Article Article { get; set; }
 
+        // Add ClubId and Club
+
     }
 }

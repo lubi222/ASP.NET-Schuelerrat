@@ -21,5 +21,11 @@
 
         public ICollection<Paragraph> Paragraphs { get; set; }
 
+        // Otgovornik
+
+        // Maxclass, minclass
+
+        // TODO: vremetraene (later) - string? // x puti v sedmicata
+
     }
 }
