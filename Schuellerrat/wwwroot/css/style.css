@@ -3197,7 +3197,7 @@ footer .widget_recent-courses {
 
     .main-content.course-grid .flat-course {
         margin-bottom: 33px;
-        width: 33.33333333333333%;
+        width: 50%;
         padding: 0 15px;
         float: left;
     }

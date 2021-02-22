@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Data;
+    using Microsoft.EntityFrameworkCore;
     using Models;
 
     public class ClubListService : IClubListService
@@ -17,7 +18,7 @@
 
         public ICollection<Club> GetAll()
         {
-            return this.dbContext.Clubs.ToList();
+            return this.dbContext.Clubs.Include(x => x.Article).Include(x => x.Article.Paragraphs).Include(x => x.Article.Images).ToList();
         }
 
         public Club GetById(int id)

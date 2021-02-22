@@ -6,8 +6,14 @@
     {
         public string Title { get; set; }
 
-        public ICollection<ImageViewModel> Images { get; set; }
+        public string Leader { get; set; }
 
-        public ICollection<ParagraphViewModel> Paragraphs { get; set; }
+        public int? MaxClass { get; set; }
+
+        public int? MinClass { get; set; }
+
+        public string Time { get; set; }
+
+        public ArticleViewModel Article { get; set; }
     }
 }

@@ -20,19 +20,27 @@ namespace Schuellerrat.Controllers
 
         public IActionResult Index()
         {
-            var dbClubs = clubListService.GetAll();
+            var dbClubs = clubListService.GetAll().ToList();
             var viewClubs = dbClubs.Select(x => new ClubViewModel
             {
                 Title = x.Title,
-                Images = x.Images.Select(i => new ImageViewModel
+                Leader = x.Leader,
+                MaxClass = x.MaxClass,
+                MinClass = x.MinClass,
+                Time = x.Time,
+                Article = new ArticleViewModel
                 {
-                    Path = i.Path
-                }).ToList(),
-                Paragraphs = x.Paragraphs.Select(p => new ParagraphViewModel
-                {
-                    Title = p.Title,
-                    Content = p.Content
-                }).ToList()
+                    Title = x.Article.Title,
+                    Images = x.Article.Images.Select(i => new ImageViewModel()
+                    {
+                        Path = i.Path
+                    }).ToList(),
+                    Paragraphs = x.Article.Paragraphs.Select(p => new ParagraphViewModel
+                    {
+                        Title = p.Title,
+                        Content = p.Content
+                    }).ToList(),
+                }
             }).ToList();
 
 

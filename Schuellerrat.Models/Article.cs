@@ -23,7 +23,5 @@ namespace Schuellerrat.Models
         public ICollection<Image> Images { get; set; }
 
         public ICollection<Paragraph> Paragraphs { get; set; }
-
-
     }
 }

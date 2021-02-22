@@ -8,8 +8,6 @@
 
     public class ApplicationDbContextSeeder : ISeeder
     {
-        private static string FilePath = @"$\..\..\Schuellerrat.Data\Seeding\JsonFiles\";
-        
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
             if (dbContext == null)
@@ -27,7 +25,8 @@
             var seeders = new List<ISeeder>
             {
                 new LinksSeeder(),
-                new ArticlesSeeder()
+                new ArticlesSeeder(),
+                new ClubsSeeder()
             };
 
             foreach (var seeder in seeders)

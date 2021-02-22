@@ -7,7 +7,6 @@
     using Models;
 
     public class ArticlesSeeder : ISeeder
-
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
