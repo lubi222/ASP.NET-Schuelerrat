@@ -36,7 +36,7 @@
 
             var request = new MailRequest()
             {
-                ToEmail = "elidimitrova036@gmail.com",
+                ToEmail = "lyanev@mail.bg",
                 Subject = CreateSubject(inputModel.Name, inputModel.Grade),
                 Body = inputModel.Content + "\n Имейл за обратна връзка:" + inputModel.Email,
             };
