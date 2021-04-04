@@ -186,7 +186,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Schuellerrat.InputModels\Schuellerrat.InputModels.csproj" />
     <ProjectReference Include="..\Schuellerrat.Services\Schuellerrat.Services.csproj" />
+    <ProjectReference Include="..\Schuellerrat.ViewModels\Schuellerrat.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

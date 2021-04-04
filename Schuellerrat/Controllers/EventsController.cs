@@ -11,7 +11,7 @@
         {
             this.eventsService = eventsService;
         }
-        public IActionResult Index()
+        public IActionResult All()
         {
             var events = this.eventsService.GetAllEvents();
             return this.View(events);

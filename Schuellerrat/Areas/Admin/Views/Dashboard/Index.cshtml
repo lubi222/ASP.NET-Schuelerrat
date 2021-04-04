@@ -5,7 +5,7 @@
     List<AllContentViewModel> articles = this.Model[1];
 }
 <div class="container">
-    <h2>Статии и блогове</h2>
+    <h2>Статии и блогове <button class="btn btn-success btn-lg">+</button></h2>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -31,7 +31,7 @@
     </table>
 </div>
 <div class="container">
-    <h2>Събития</h2>
+    <h2>Събития <a asp-controller="Dashboard" asp-action="AddEvent"><button class="btn btn-success btn-lg">+</button></a></h2>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -47,7 +47,7 @@
                 <td>@singleEvent.Title</td>
                 <td>@singleEvent.CreatedOn</td>
                 <td>
-                    <button class="btn btn-primary">Страница</button>
+                    <a asp-area="" asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id"><button class="btn btn-primary">Страница</button></a>
                     <button class="btn btn-warning">Промяна</button>
                     <button class="btn btn-danger">Премахване</button>
                 </td>
