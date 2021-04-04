@@ -1,0 +1,101 @@
+﻿@model Schuellerrat.ViewModels.SingleEventViewModel
+@{
+    var paragraphTexts = Model.ParagraphTexts;
+    var paragraphTitles = Model.ParagraphTitles;
+    var images = Model.Images;
+}
+<body class="header-sticky">
+    <main>
+        <div class="page-title parallax parallax4">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-title-heading">
+                            <h2 class="title">@Model.Title</h2>
+                        </div><!-- /.page-title-heading -->
+                        <div class="breadcrumbs">
+                            <ul>
+                                <li><a asp-controller="Events" asp-action="Index">Събития</a></li>
+                                <li>@Model.Title</li>
+                            </ul>
+                        </div><!-- /.breadcrumbs -->
+                    </div><!-- /.col-md-12 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /page-title parallax -->
+
+        <section class="main-content blog-posts style-v1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="blog-title-single">
+                            <h1 class="bold">@Model.Title</h1>
+                            <article class="entry clearfix">
+                                <div class="entry-border">
+                                    <div class="main-post">
+                                        <div class="wrap-img">
+                                            <img src="/images/blog/4singlev1.png" alt="images">
+                                            <div class="entry-meta">
+                                                <span class="date"><a href="#">20 March, 2016</a></span>
+                                            </div>
+                                        </div>
+                                        <div class="feature-post">
+                                            <img src="/images/blog/bs.jpg" alt="image">
+                                        </div><!-- /.feature-post -->
+                                        <div class="entry-content">
+                                            @for(int i = 0; i < paragraphTexts.Count; i++)
+                                            {
+                                                <h4>@paragraphTitles.ToList()[i]</h4>
+                                                <p>
+                                                    @paragraphTexts.ToList()[i]
+                                                </p>
+                                            }
+                                        </div><!-- /.entry-post -->
+                                    </div>
+                                </div><!-- /.entry-border -->
+                            </article><!-- /entry clearfix -->
+
+
+                        </div><!-- /blog-title-single -->
+                    </div><!-- /col-md-8 -->
+
+                    <div class="sidebar">
+                        <div class="widget widget-popular-news">
+                            <h5 class="widget-title">Recent posts</h5>
+                            <ul class="popular-news clearfix">
+                                <li>
+                                    <div class="thumb">
+                                        <img src="images/flickr/1.jpg" alt="image">
+                                    </div>
+                                    <div class="text">
+                                        <a href="#">New Chicago school budget relies on state pension</a>
+                                        <p>May 18, 2016</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb">
+                                        <img src="images/flickr/2.jpg" alt="image">
+                                    </div>
+                                    <div class="text">
+                                        <a href="#">New Chicago school budget relies on state pension</a>
+                                        <p>May 18, 2016</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="thumb">
+                                        <img src="images/flickr/3.jpg" alt="image">
+                                    </div>
+                                    <div class="text">
+                                        <a href="#">New Chicago school budget relies on state pension</a>
+                                        <p>May 18, 2016</p>
+                                    </div>
+                                </li>
+                            </ul><!-- /popular-news clearfix -->
+                        </div><!-- /widget widget-popular-news -->
+                    </div><!-- /sidebar -->
+                </div><!-- /row -->
+            </div><!-- /container -->
+        </section><!-- /main-content -->
+    </main>
+</body>
