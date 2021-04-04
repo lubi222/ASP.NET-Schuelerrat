@@ -26,7 +26,8 @@
             {
                 new LinksSeeder(),
                 new ArticlesSeeder(),
-                new ClubsSeeder()
+                new ClubsSeeder(),
+                new AdminSeeder()
             };
 
             foreach (var seeder in seeders)

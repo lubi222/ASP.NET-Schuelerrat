@@ -1,12 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
-namespace Schuellerrat.Data
+﻿namespace Schuellerrat.Data
 {
-    using System.IO;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.Configuration;
     using Models;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
