@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat.Models", "Schu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Schuellerrat.Services", "Schuellerrat.Services\Schuellerrat.Services.csproj", "{0AD26A7B-2B8A-4617-84E4-D2A69407036E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schuellerrat.InputModels", "Schuellerrat.InputModels\Schuellerrat.InputModels.csproj", "{82D95BFB-EB06-4734-98DB-F6ADEBDBFB6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schuellerrat.ViewModels", "Schuellerrat.ViewModels\Schuellerrat.ViewModels.csproj", "{284739A3-6591-419B-8C8B-380689736B37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{0AD26A7B-2B8A-4617-84E4-D2A69407036E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AD26A7B-2B8A-4617-84E4-D2A69407036E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AD26A7B-2B8A-4617-84E4-D2A69407036E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82D95BFB-EB06-4734-98DB-F6ADEBDBFB6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82D95BFB-EB06-4734-98DB-F6ADEBDBFB6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82D95BFB-EB06-4734-98DB-F6ADEBDBFB6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82D95BFB-EB06-4734-98DB-F6ADEBDBFB6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284739A3-6591-419B-8C8B-380689736B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284739A3-6591-419B-8C8B-380689736B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284739A3-6591-419B-8C8B-380689736B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284739A3-6591-419B-8C8B-380689736B37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

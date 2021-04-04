@@ -11,11 +11,14 @@
         public string Title { get; set; }
 
         [Required]
-        public string Content { get; set; }
+        public string Text { get; set; }
 
-        [Required]
-        public int ArticleId { get; set; }
-        
+        public int? ArticleId { get; set; }
+
         public Article Article { get; set; }
+
+        public int? EventId { get; set; }
+
+        public Event Event { get; set; }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Schuellerrat.Data;
 
 namespace Schuellerrat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210404125743_AddCreatedOnInArticlesTable")]
+    partial class AddCreatedOnInArticlesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -268,28 +270,6 @@ namespace Schuellerrat.Data.Migrations
                     b.ToTable("Clubs");
                 });
 
-            modelBuilder.Entity("Schuellerrat.Models.Event", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EventDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Events");
-                });
-
             modelBuilder.Entity("Schuellerrat.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -300,9 +280,6 @@ namespace Schuellerrat.Data.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -310,8 +287,6 @@ namespace Schuellerrat.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Images");
                 });
@@ -346,13 +321,10 @@ namespace Schuellerrat.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ArticleId")
+                    b.Property<int>("ArticleId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -363,8 +335,6 @@ namespace Schuellerrat.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Paragraphs");
                 });
@@ -437,10 +407,6 @@ namespace Schuellerrat.Data.Migrations
                         .WithMany("Images")
                         .HasForeignKey("ArticleId");
 
-                    b.HasOne("Schuellerrat.Models.Event", null)
-                        .WithMany("Images")
-                        .HasForeignKey("EventId");
-
                     b.Navigation("Article");
                 });
 
@@ -448,25 +414,14 @@ namespace Schuellerrat.Data.Migrations
                 {
                     b.HasOne("Schuellerrat.Models.Article", "Article")
                         .WithMany("Paragraphs")
-                        .HasForeignKey("ArticleId");
-
-                    b.HasOne("Schuellerrat.Models.Event", "Event")
-                        .WithMany("Paragraphs")
-                        .HasForeignKey("EventId");
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Article");
-
-                    b.Navigation("Event");
                 });
 
             modelBuilder.Entity("Schuellerrat.Models.Article", b =>
-                {
-                    b.Navigation("Images");
-
-                    b.Navigation("Paragraphs");
-                });
-
-            modelBuilder.Entity("Schuellerrat.Models.Event", b =>
                 {
                     b.Navigation("Images");
 

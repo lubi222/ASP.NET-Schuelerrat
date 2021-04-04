@@ -18,6 +18,7 @@
 
         }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Event> Events { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Link> Links { get; set; }
         public DbSet<Paragraph> Paragraphs { get; set; }

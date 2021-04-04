@@ -38,7 +38,7 @@ namespace Schuellerrat.Controllers
                     Paragraphs = x.Article.Paragraphs.Select(p => new ParagraphViewModel
                     {
                         Title = p.Title,
-                        Content = p.Content
+                        Content = p.Text
                     }).ToList(),
                 }
             }).ToList();

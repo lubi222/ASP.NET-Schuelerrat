@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -13,7 +13,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Schuellerrat.Data\Schuellerrat.Data.csproj" />
+    <ProjectReference Include="..\Schuellerrat.InputModels\Schuellerrat.InputModels.csproj" />
     <ProjectReference Include="..\Schuellerrat.Models\Schuellerrat.Models.csproj" />
+    <ProjectReference Include="..\Schuellerrat.ViewModels\Schuellerrat.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

@@ -25,7 +25,7 @@
             var seeders = new List<ISeeder>
             {
                 new LinksSeeder(),
-                new ArticlesSeeder(),
+                new EventsSeeder(),
                 new ClubsSeeder(),
                 new AdminSeeder()
             };

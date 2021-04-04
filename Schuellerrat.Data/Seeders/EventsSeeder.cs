@@ -6,60 +6,67 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class ArticlesSeeder : ISeeder
+    public class EventsSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (dbContext.Articles.Any())
+            if (dbContext.Events.Any())
             {
                 return;
             }
 
-            await dbContext.Articles.AddAsync(new Article()
+            var act = dbContext.Events.AddAsync(new Event()
             {
                 Title = "Среща през месец март",
+                CreatedOn = DateTime.Now,
+                EventDate = DateTime.Now,
                 Paragraphs = new List<Paragraph>()
             {
                 new Paragraph
                 {
                     Title = "1",
-                    Content = "Уведомяваме Ви, че ще се проведе събрание следващия вторник",
+                    Text = "Уведомяваме Ви, че ще се проведе събрание следващия вторник",
                 },
             }
 
-            });
-            await dbContext.Articles.AddAsync(new Article()
+            }).Result;
+
+            await dbContext.Events.AddAsync(new Event()
             {
                 Title = "Немската чете",
+                CreatedOn = DateTime.Now,
+                EventDate = DateTime.Now,
                 Paragraphs = new List<Paragraph>()
             {
                 new Paragraph
                 {
                     Title = "1",
-                    Content = "Събитието ще се проведе през месец февруари.",
+                    Text = "Събитието ще се проведе през месец февруари.",
                 },
                 new Paragraph
                 {
                     Title = "2",
-                    Content = "Събитието ще има много посетители.",
+                    Text = "Събитието ще има много посетители.",
                 },
             }
 
             });
-            await dbContext.Articles.AddAsync(new Article()
+            await dbContext.Events.AddAsync(new Event()
             {
                 Title = "Коледен базар",
+                CreatedOn = DateTime.Now,
+                EventDate = DateTime.Now,
                 Paragraphs = new List<Paragraph>()
             {
                 new Paragraph
                 {
                     Title = "1",
-                    Content = "С цел повдигане на духа и настроението на учениците!",
+                    Text = "С цел повдигане на духа и настроението на учениците!",
                 },
                 new Paragraph
                 {
                     Title = "2",
-                    Content = "Винаги има страхотни вкусотии, така че ще ви очакваме :)",
+                    Text = "Винаги има страхотни вкусотии, така че ще ви очакваме :)",
                 },
             }
 

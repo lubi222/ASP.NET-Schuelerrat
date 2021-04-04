@@ -45,6 +45,7 @@ namespace Schuellerrat
 
             services.AddTransient<IMailService, MailService>();
             services.AddTransient<IClubListService, ClubListService>();
+            services.AddTransient<IDashboardService, DashboardService>();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
         }

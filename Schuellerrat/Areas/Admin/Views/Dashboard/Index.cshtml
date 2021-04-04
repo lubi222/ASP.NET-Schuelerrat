@@ -1,32 +1,58 @@
-﻿<div class="container">
+﻿@using Schuellerrat.ViewModels
+@model List<List<Schuellerrat.ViewModels.AllContentViewModel>>
+@{
+    List<AllContentViewModel> events = this.Model[0];
+    List<AllContentViewModel> articles = this.Model[1];
+}
+<div class="container">
+    <h2>Статии и блогове</h2>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Заглавие</th>
+            <th scope="col">Създадено на</th>
+            <th scope="col">Администрация</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>fadsf</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>afdsf</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>fasdf</td>
-        </tr>
+        @foreach (var article in articles)
+        {
+            <tr>
+                <td>@article.Title</td>
+                <td>@article.CreatedOn</td>
+                <td>
+                    <button class="btn btn-primary">Страница</button>
+                    <button class="btn btn-warning">Промяна</button>
+                    <button class="btn btn-danger">Премахване</button>
+                </td>  
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <h2>Събития</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Заглавие</th>
+                <th scope="col">Създадено на</th>
+                <th scope="col">Администрация</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var singleEvent in events)
+        {
+            <tr>
+                <td>@singleEvent.Title</td>
+                <td>@singleEvent.CreatedOn</td>
+                <td>
+                    <button class="btn btn-primary">Страница</button>
+                    <button class="btn btn-warning">Промяна</button>
+                    <button class="btn btn-danger">Премахване</button>
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

@@ -24,13 +24,14 @@
                 Time = "1 път годишно",
                 Article = new Article
                 {
+                    CreatedOn = DateTime.Now,
                     Title = "Jugend forscht",
                     Paragraphs = new List<Paragraph>()
                     {
                         new Paragraph
                         {
                             Title = "1",
-                            Content = "Извънкласна дейност, организирана от Немския отдел. Могат да участват ученици от 10. клас нагоре.",
+                            Text = "Извънкласна дейност, организирана от Немския отдел. Могат да участват ученици от 10. клас нагоре.",
                         }
                     }
                 }
