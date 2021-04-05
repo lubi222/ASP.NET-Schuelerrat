@@ -80,6 +80,19 @@ namespace Schuellerrat.Services
                 oldEvent.Images.Add(img);
             }
 
+            foreach (var paragraph in input.Paragraphs)
+            {
+                if (!oldEvent.Paragraphs.Any(p => p.Title == paragraph.Title))
+                {
+                    oldEvent.Paragraphs.Add(new Paragraph
+                    {
+                        Title = paragraph.Title,
+                        Text = paragraph.Content,
+                        EventId = oldEvent.Id,
+                    });
+                }
+            }
+
             oldEvent.Title = input.Title;
             await this.dbContext.SaveChangesAsync();
         }

@@ -66,6 +66,25 @@
         public IActionResult EditEvent(int id)
         {
             var oldEvent = this.eventsService.GetSingleEvent(id);
+
+            var paragraphDict = new Dictionary<string, string>();
+
+            for (int i = 0; i < oldEvent.ParagraphTitles.Count; i++)
+            {
+                paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], oldEvent.ParagraphTexts.ToList()[i]);
+            }
+
+            var filledParagraphs = new List<ParagraphInputModel>();
+
+            foreach (var (key, value) in paragraphDict)
+            {
+                filledParagraphs.Add(new ParagraphInputModel
+                {
+                    Title = key,
+                    Content = value
+                });
+            }
+
             var newEvent = new EditInputModel
             {
                 Id = id,
@@ -76,6 +95,7 @@
                     Path = x.Path,
                     Id = x.Id
                 }).ToList(),
+                Paragraphs = filledParagraphs,
                 ParagraphTitles = oldEvent.ParagraphTitles,
                 ParagraphTexts = oldEvent.ParagraphTexts
             };

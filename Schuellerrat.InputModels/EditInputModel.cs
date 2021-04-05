@@ -12,6 +12,7 @@
         {
             this.Images = new List<IFormFile>();
             this.OldImages = new List<Image>();
+            this.Paragraphs = new List<ParagraphInputModel>();
             this.ParagraphTitles = new List<string>();
             this.ParagraphTexts = new List<string>();
         }

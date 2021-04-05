@@ -56,19 +56,23 @@
                 <div class="input-group-btn">
                     <button class="btn btn-success float-right" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
                 </div>
-                @for (int i = 0; i < @Model.ParagraphTexts.Count; i++)
+
+                @for (int i = 0; i < @Model.ParagraphTexts.Count; i++) 
                 {
+                    // name="Paragraphs[i].Title
                     <div class='form-group'>
                         Заглавие:
-                        <input type='text' asp-for='@Model.ParagraphTitles.ToList()[i]' id=''/>
-                        <span asp-validation-for='@Model.ParagraphTitles.ToList()[i]' class='text-danger'></span>
-                        Текст: <input type='text' asp-for='@Model.ParagraphTexts.ToList()[i]' id=''/>
-                        <span asp-validation-for='@Model.ParagraphTexts.ToList()[i]' class='text-danger'></span>
+                        <input type='text'  asp-for="Paragraphs.ToList()[i].Title" id=''/>
+                        @*<span asp-validation-for='Paragraphs[@i].Title' class='text-danger'></span>*@
+                        Текст: <input type='text'  asp-for="Paragraphs.ToList()[i].Content" id=''/>
+                        @*<span asp-validation-for='Paragraphs[@i].Content' class='text-danger'></span>*@
                     </div>
                     <div class='input-group-btn'>
                         <button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>
                     </div>
                 }
+                
+
             </div>
         </div>
 
@@ -96,7 +100,7 @@
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
 
-            divtest.innerHTML = "<div class='form-group'> Заглавие: <input  type='text' name='Paragraphs[" + paragraphIndex + "].Title' id='' /><span asp-validation-for='Title' class='text-danger'></span> Текст: <input type='text', name='Paragraphs[" + paragraphIndex + "].Content' id='' /><span asp-validation-for='Content' class='text-danger'></div><div class='input-group-btn'><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
+            divtest.innerHTML = "<div class='form-group'> Заглавие: <input  type='text' asp-for='Paragraphs.ToList()[" + paragraphIndex + "].Title' id='' /><span asp-validation-for='Paragraphs.ToList()[" + paragraphIndex + "].Title' class='text-danger'></span> Текст: <input type='text', asp-for='Paragraphs.ToList()[" + paragraphIndex + "].Content' id='' /><span asp-validation-for='Paragraphs.ToList()[" + paragraphIndex + "].Content' class='text-danger'></div><div class='input-group-btn'><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
             console.log("paragraph index updated", paragraphIndex);
 
 
