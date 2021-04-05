@@ -22,7 +22,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<ICollection<int>> UploadAsync(ICollection<IFormFile> files, string path)
+        public async Task<ICollection<Image>> UploadAsync(ICollection<IFormFile> files, string path)
         {
             ICollection<Image> images = new List<Image>();
 
@@ -31,10 +31,7 @@
                 images.Add(await this.UploadImageAsync(file, path));
             }
 
-            await this.dbContext.Images.AddRangeAsync(images);
-            await this.dbContext.SaveChangesAsync();
-
-            return images.Select(x => x.Id).ToList();
+            return images;
         }
 
         public async Task DeleteImage(Cloudinary cloudinary, string name)
@@ -60,7 +57,7 @@
                 fileStream.Close();
                 destinationImage = await File.ReadAllBytesAsync(filePath);
 
-                 using var destinationStream = new MemoryStream(destinationImage);
+                await using var destinationStream = new MemoryStream(destinationImage);
                 string fileName = file.FileName;
                 fileName = fileName.Replace("&", "And");
                 var uploadParams = new ImageUploadParams()

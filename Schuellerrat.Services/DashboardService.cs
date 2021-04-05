@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Schuellerrat.Services
+﻿namespace Schuellerrat.Services
 {
     using System;
     using System.Collections.Generic;
@@ -47,22 +45,19 @@ namespace Schuellerrat.Services
         }
 
         public async Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService, string basePath)
-        {
-            var ids = await cloudinaryService.UploadAsync(input.Images, basePath);
-            //PARAGRAPHS ARE REQUIRED
-            var event2 = new Event()
+        { 
+            await this.dbContext.Events.AddAsync(new Event
             {
                 Title = input.Title,
-                Paragraphs = input.Paragraphs.Select(p => new Paragraph
+                Paragraphs = input.Paragraphs?.Select(p => new Paragraph
                 {
                     Title = p.Title,
                     Text = p.Content,
                 }).ToList(),
                 EventDate = input.EventDate,
                 CreatedOn = DateTime.Now,
-                Images = this.dbContext.Images.Where(x => ids.Any(i => i == x.Id)).ToList()
-            };
-            await this.dbContext.Events.AddAsync(event2);
+                Images = input.Images != null ? await cloudinaryService.UploadAsync(input.Images, basePath) : null
+            });
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -70,20 +65,5 @@ namespace Schuellerrat.Services
         {
             throw new System.NotImplementedException();
         }
-
-        //private async Task<ICollection<Image>> UploadImagesAsync(ICollection<IFormFile> input, ICloudinaryService cloudinaryService)
-        //{
-        //    var images = new List<Image>();
-
-        //    foreach (var file in input)
-        //    {
-        //        images.Add(new Image
-        //        {
-        //            Path = await cloudinaryService.UploadAsync(file, file.FileName),
-        //        });
-        //    }
-
-        //    return images;
-        //}
     }
 }

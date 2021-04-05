@@ -8,7 +8,7 @@ namespace Schuellerrat.Services
 {
     public interface ICloudinaryService
     {
-        public Task<ICollection<int>> UploadAsync(ICollection<IFormFile> files, string basePath);
+        public Task<ICollection<Image>> UploadAsync(ICollection<IFormFile> files, string basePath);
 
         public Task DeleteImage(Cloudinary cloudinary, string name);
     }

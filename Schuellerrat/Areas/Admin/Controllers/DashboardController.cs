@@ -47,18 +47,10 @@
         {
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("error");
+                return this.View(input);
             }
-
-            try
-            {
-                await this.dashboardService.AddEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            await this.dashboardService.AddEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
+            
            
             return this.RedirectToAction("Index");
         }
