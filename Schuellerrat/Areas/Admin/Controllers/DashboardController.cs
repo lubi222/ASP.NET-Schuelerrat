@@ -12,10 +12,12 @@
     public class DashboardController : Controller
     {
         private readonly IDashboardService dashboardService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public DashboardController(IDashboardService dashboardService)
+        public DashboardController(IDashboardService dashboardService, ICloudinaryService cloudinaryService)
         {
             this.dashboardService = dashboardService;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Index()
@@ -36,7 +38,7 @@
         [HttpPost]
         public IActionResult AddEvent(AddEventInputModel input)
         {
-            this.dashboardService.AddEvent(input);
+            this.dashboardService.AddEvent(input, this.cloudinaryService);
             return this.RedirectToAction("Index");
         }
     }

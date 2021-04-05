@@ -1,4 +1,6 @@
-﻿namespace Schuellerrat.Services
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Schuellerrat.Services
 {
     using System;
     using System.Collections.Generic;
@@ -44,7 +46,7 @@
                 .ToList();
         }
 
-        public async Task AddEvent(AddEventInputModel input)
+        public async Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService)
         {
             await this.dbContext
                 .Events
@@ -52,10 +54,7 @@
                 {
                     Title = input.Title,
                     CreatedOn = DateTime.Now,
-                    Images = input.Images.Select(x => new Image
-                    {
-                        Path = x.FileName
-                    }).ToList(),
+                    Images = await cloudinaryService.UploadAsync(input.Images),
                     Paragraphs = input.Paragraphs.Select(p => new Paragraph
                     {
                         Title = p.Title,
@@ -70,5 +69,20 @@
         {
             throw new System.NotImplementedException();
         }
+
+        //private async Task<ICollection<Image>> UploadImagesAsync(ICollection<IFormFile> input, ICloudinaryService cloudinaryService)
+        //{
+        //    var images = new List<Image>();
+
+        //    foreach (var file in input)
+        //    {
+        //        images.Add(new Image
+        //        {
+        //            Path = await cloudinaryService.UploadAsync(file, file.FileName),
+        //        });
+        //    }
+
+        //    return images;
+        //}
     }
 }

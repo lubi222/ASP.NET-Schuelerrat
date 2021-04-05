@@ -11,7 +11,7 @@
 
         public ICollection<AllContentViewModel> GetAllEvents();
 
-        public Task AddEvent(AddEventInputModel input);
+        public Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService);
 
         public Task AddArticle(AddArticleInputModel input);
     }

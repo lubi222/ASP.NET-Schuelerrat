@@ -1,3 +1,5 @@
+using CloudinaryDotNet;
+
 namespace Schuellerrat
 {
     using Microsoft.AspNetCore.Builder;
@@ -47,8 +49,19 @@ namespace Schuellerrat
             services.AddTransient<IClubListService, ClubListService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+
+            Account account = new Account(
+                Configuration.GetSection("Cloudinary:cloud").Value,
+                Configuration.GetSection("Cloudinary:apiKey").Value,
+                Configuration.GetSection("Cloudinary:apiSecret").Value);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
