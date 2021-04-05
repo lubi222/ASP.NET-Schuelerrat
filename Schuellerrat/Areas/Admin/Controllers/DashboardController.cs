@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Models;
     using Services;
     using ViewModels;
 
@@ -62,23 +63,34 @@
 
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public IActionResult EditEvent(EditModel input, int id)
+        public IActionResult EditEvent(int id)
         {
-            input.SingleEventViewModel = this.eventsService.GetSingleEvent(id);
-                
-            return this.View(input);
+            var oldEvent = this.eventsService.GetSingleEvent(id);
+            var newEvent = new EditInputModel
+            {
+                Id = id,
+                Title = oldEvent.Title,
+                EventDate = DateTime.Parse(oldEvent.EventDate),
+                OldImages = oldEvent.Images.Select(x => new Image
+                {
+                    Path = x.Path,
+                    Id = x.Id
+                }).ToList(),
+                ParagraphTitles = oldEvent.ParagraphTitles,
+                ParagraphTexts = oldEvent.ParagraphTexts
+            };
+            return this.View(newEvent);
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> EditEvent(EditInputModel input, int id)
         {
+            input.Id = id;
             if (!ModelState.IsValid)
             {
-                return this.RedirectToAction("EditEvent", new EditModel() {EditInputModel = input});
+                return this.View(input);
             }
-
-            input.Id = id;
 
             await this.dashboardService.EditEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
 

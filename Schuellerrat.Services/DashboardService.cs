@@ -47,7 +47,7 @@ namespace Schuellerrat.Services
         }
 
         public async Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService, string basePath)
-        { 
+        {
             await this.dbContext.Events.AddAsync(new Event
             {
                 Title = input.Title,
@@ -71,9 +71,15 @@ namespace Schuellerrat.Services
         public async Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath)
         {
             var oldEvent = this.dbContext.Events.FirstOrDefault(e => e.Id == input.Id);
+
             oldEvent.EventDate = input.EventDate;
 
-            oldEvent.Images.ToList().AddRange(await cloudinaryService.UploadAsync(input.Images, basePath));
+            var images = await cloudinaryService.UploadAsync(input.Images, basePath);
+            foreach (var img in images)
+            {
+                oldEvent.Images.Add(img);
+            }
+
             oldEvent.Title = input.Title;
             await this.dbContext.SaveChangesAsync();
         }

@@ -31,7 +31,7 @@ namespace Schuellerrat.Controllers
                 Article = new ArticleViewModel
                 {
                     Title = x.Article.Title,
-                    Images = x.Article.Images.Select(i => new ImageViewModel()
+                    Images = x.Article.Images.Select(i => new Schuellerrat.ViewModels.ImageViewModel()
                     {
                         Path = i.Path
                     }).ToList(),
