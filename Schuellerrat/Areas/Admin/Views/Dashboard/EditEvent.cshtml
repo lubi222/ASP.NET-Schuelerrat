@@ -1,0 +1,119 @@
+﻿@using System.Linq
+@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal.Account.Manage
+@model Schuellerrat.ViewModels.EditModel
+
+
+
+<div class="container">
+
+    @if (this.TempData.ContainsKey("message"))
+    {
+        <div class="alert alert-success alert-dismissible show" role="alert">
+            @this.TempData["message"]
+            Image Deleted Successfully
+            <button style="padding: 0; height: auto" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                &times;
+            </button>
+        </div>
+    }
+
+    <h2 class="mb-5">Промени събитие</h2>
+    <form asp-controller="Dashboard" asp-action="EditEvent" method="post" asp-route-id="@Model.SingleEventViewModel.Id" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <h4>Заглавие</h4>
+
+            <input class="form-control" placeholder="Event title" asp-for="@Model.EditInputModel.Title">
+            <span class="text-danger" asp-validation-for="@Model.EditInputModel.Title"></span>
+        </div>
+
+        <div class="input-group date d-flex mb-5" data-provide="datepicker">
+            <h4>Дата на провеждане</h4>
+            <input type="hidden" class="form-control" asp-for="@Model.EditInputModel.EventDate">
+            <span class="text-danger" asp-validation-for="@Model.EditInputModel.EventDate"></span>
+            <div class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        @foreach (var image in @Model.SingleEventViewModel.Images)
+        {
+            
+
+            <img style="max-height: 300px" src="@image.Path"/>
+
+            <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteImage" asp-route-id="@image.Id" asp-route-eventId="@Model.SingleEventViewModel.Id">X</a>
+
+        }
+
+        <div class="form-group mb-5">
+                <h4>Добави изображения</h4>
+                <input asp-for="@Model.EditInputModel.Images" class="form-control" />
+                <span asp-validation-for="@Model.EditInputModel.Images" class="text-danger"></span>
+        </div>
+
+        <div id="education_fields_container">
+            <div id="education_fields">
+                <h4>Параграфи</h4>
+                <div class="input-group-btn">
+                    <button class="btn btn-success float-right" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                </div>
+                @for (int i = 0; i < @Model.SingleEventViewModel.ParagraphTexts.Count; i++)
+                {
+                    <div class='form-group'>
+                        Заглавие:
+                        <input type='text' asp-for='@Model.SingleEventViewModel.ParagraphTitles.ToList()[i]' id=''/>
+                        <span asp-validation-for='@Model.SingleEventViewModel.ParagraphTitles.ToList()[i]' class='text-danger'></span>
+                        Текст: <input type='text' asp-for='@Model.SingleEventViewModel.ParagraphTexts.ToList()[i]' id=''/>
+                        <span asp-validation-for='@Model.SingleEventViewModel.ParagraphTexts.ToList()[i]' class='text-danger'></span>
+                    </div>
+                    <div class='input-group-btn'>
+                        <button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary pl-5 pr-5 mb-5">Завърши</button>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                autoclose: true,
+                todayHighlight: true
+            }).datepicker('update', new Date());
+        });
+    </script>
+
+    <script>
+        var room = 1;
+        var paragraphIndex = @Model.SingleEventViewModel.ParagraphTexts.Count;
+        function education_fields() {
+            room++;
+            var objTo = document.getElementById('education_fields')
+            var divtest = document.createElement("div");
+            divtest.setAttribute("class", "form-group removeclass" + room);
+            var rdiv = 'removeclass' + room;
+
+            divtest.innerHTML = "<div class='form-group'> Заглавие: <input  type='text' name='Paragraphs[" + paragraphIndex + "].Title' id='' /><span asp-validation-for='Title' class='text-danger'></span> Текст: <input type='text', name='Paragraphs[" + paragraphIndex + "].Content' id='' /><span asp-validation-for='Content' class='text-danger'></div><div class='input-group-btn'><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
+            console.log("paragraph index updated", paragraphIndex);
+
+
+
+            objTo.appendChild(divtest)
+            paragraphIndex++;
+
+            var allCreatedParagraphs = $("#education_fields_container").prop("outerHTML");
+            console.log("all the paragraphs in HTML", allCreatedParagraphs);
+
+        }
+        function remove_education_fields(rid) {
+            $('.removeclass' + rid).remove();
+        }
+    </script>
+
+}
+

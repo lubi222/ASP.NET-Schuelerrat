@@ -1,16 +1,20 @@
-﻿namespace Schuellerrat.InputModels
-{
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using Microsoft.AspNetCore.Http;
+using Schuellerrat.InputModels;
 
-    public class AddEventInputModel
+namespace Schuellerrat.ViewModels
+{
+    public class EditInputModel
     {
-        public AddEventInputModel()
+        public EditInputModel()
         {
             this.Images = new List<IFormFile>();
         }
+
+        public int Id { get; set; }
 
         [MinLength(5)]
         [MaxLength(40)]

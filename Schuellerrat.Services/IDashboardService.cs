@@ -14,5 +14,9 @@
         public Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService, string basePath);
 
         public Task AddArticle(AddArticleInputModel input);
+
+        public Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath);
+
+        public Task DeleteImage(int id);
     }
 }

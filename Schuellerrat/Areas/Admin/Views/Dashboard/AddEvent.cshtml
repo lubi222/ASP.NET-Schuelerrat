@@ -2,36 +2,41 @@
 @model Schuellerrat.InputModels.AddEventInputModel
 
 <div class="container">
-    <h2>Add event</h2>
+    <h2 class="mb-5">Добави събитие</h2>
     <form asp-controller="Dashboard" asp-action="AddEvent" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label asp-for="Title"></label>
+            <h4>Заглавие</h4>
+
             <input class="form-control" placeholder="Event title" asp-for="Title">
             <span class="text-danger" asp-validation-for="Title"></span>
         </div>
 
-        <div class="input-group date" data-provide="datepicker">
-            <label asp-for="EventDate"></label>
-            <input type="text" class="form-control" asp-for="EventDate">
+        <div class="input-group date d-flex mb-5" data-provide="datepicker" >
+            <h4>Дата на провеждане</h4>
+            <input type="hidden" class="form-control" asp-for="EventDate">
             <span class="text-danger" asp-validation-for="EventDate"></span>
-            <div class="input-group-addon">
+            <div class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
+                <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
-        <div class="form-group">
-            <label asp-for="Images"></label>
-            <input asp-for="Images" class="form-control"/>
+        <div class="form-group mb-5">
+            <h4>Изображения</h4>
+            <input asp-for="Images" class="form-control" />
             <span asp-validation-for="Images" class="text-danger"></span>
         </div>
 
-        <div id="education_fields">
-            <div class="input-group-btn">
-                <button class="btn btn-success" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+        <div id="education_fields_container">
+            <div id="education_fields">
+                <h4>Параграфи</h4>
+                <div class="input-group-btn">
+                    <button class="btn btn-success float-right" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
+                </div>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary pl-5 pr-5 mb-5">Завърши</button>
     </form>
 </div>
 
@@ -54,19 +59,23 @@
             var divtest = document.createElement("div");
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
-            //divtest.innerHTML = '<div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Schoolname" name="Schoolname[]" value="" placeholder="School name"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Major" name="Major[]" value="" placeholder="Major"></div></div><div class="col-sm-3 nopadding"><div class="form-group"> <input type="text" class="form-control" id="Degree" name="Degree[]" value="" placeholder="Degree"></div></div><div class="col-sm-3 nopadding"><div class="form-group"><div class="input-group"> <select class="form-control" id="educationDate" name="educationDate[]"><option value="">Date</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option> </select><div class="input-group-btn"> <button class="btn btn-danger" type="button" onclick="remove_education_fields(' + room + ');"> <span class="glyphicon glyphicon-minus" aria-hidden="true"></span> </button></div></div></div></div><div class="clear"></div>';
 
-            divtest.innerHTML = "<div class='form-group'> Name: <input  type='text' name='Paragraphs[" + paragraphIndex + "].Title' id='' /> Text: <input type='text', name='Paragraphs[" + paragraphIndex + "].Content' id='' /></div><div class='input-group-btn'><button class='btn btn-success' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
+            divtest.innerHTML = "<div class='form-group'> Заглавие: <input  type='text' name='Paragraphs[" + paragraphIndex + "].Title' id='' /><span asp-validation-for='Title' class='text-danger'></span> Текст: <input type='text', name='Paragraphs[" + paragraphIndex + "].Content' id='' /><span asp-validation-for='Content' class='text-danger'></div><div class='input-group-btn'><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
             console.log("paragraph index updated", paragraphIndex);
+
 
 
             objTo.appendChild(divtest)
             paragraphIndex++;
+
+            var allCreatedParagraphs = $("#education_fields_container").prop("outerHTML");
+            console.log("all the paragraphs in HTML", allCreatedParagraphs);
 
         }
         function remove_education_fields(rid) {
             $('.removeclass' + rid).remove();
         }
     </script>
+    
 }
 

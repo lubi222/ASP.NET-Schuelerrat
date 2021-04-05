@@ -28,10 +28,16 @@
                 .Where(x => x.Id == id)
                 .Select(x => new SingleEventViewModel
                 {
+                    Id = x.Id,
                     Title = x.Title,
                     ParagraphTitles = x.Paragraphs.Select(pti => pti.Title).ToList(),
                     ParagraphTexts = x.Paragraphs.Select(pte => pte.Text).ToList(),
-                    Images = x.Images.Select(i => i.Path).ToList(),
+                    Images = x.Images.Select(i => new ImageViewModel
+                    {
+                        Path = i.Path,
+                        Id = i.Id
+                    }).ToList(),
+
                     EventDate = x.EventDate.ToString("dd/MM/yyyy")
                 }).FirstOrDefault();
         }

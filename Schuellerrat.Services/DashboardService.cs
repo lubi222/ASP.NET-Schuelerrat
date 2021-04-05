@@ -1,4 +1,6 @@
-﻿namespace Schuellerrat.Services
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Schuellerrat.Services
 {
     using System;
     using System.Collections.Generic;
@@ -64,6 +66,23 @@
         public async Task AddArticle(AddArticleInputModel input)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath)
+        {
+            var oldEvent = this.dbContext.Events.FirstOrDefault(e => e.Id == input.Id);
+            oldEvent.EventDate = input.EventDate;
+
+            oldEvent.Images.ToList().AddRange(await cloudinaryService.UploadAsync(input.Images, basePath));
+            oldEvent.Title = input.Title;
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteImage(int id)
+        {
+            var imageToRemove = await this.dbContext.Images.FirstOrDefaultAsync(i => i.Id == id);
+            this.dbContext.Images.Remove(imageToRemove);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

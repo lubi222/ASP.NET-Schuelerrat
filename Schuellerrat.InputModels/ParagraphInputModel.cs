@@ -5,9 +5,11 @@
     public class ParagraphInputModel
     {
         [MinLength(1)]
+        [Required]
         public string Title { get; set; }
 
         [MinLength(10)]
+        [Required]
         public string Content { get; set; }
     }
 }
