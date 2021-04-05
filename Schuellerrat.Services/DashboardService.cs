@@ -46,22 +46,23 @@ namespace Schuellerrat.Services
                 .ToList();
         }
 
-        public async Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService)
+        public async Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService, string basePath)
         {
-            await this.dbContext
-                .Events
-                .AddAsync(new Event
+            var ids = await cloudinaryService.UploadAsync(input.Images, basePath);
+            //PARAGRAPHS ARE REQUIRED
+            var event2 = new Event()
+            {
+                Title = input.Title,
+                Paragraphs = input.Paragraphs.Select(p => new Paragraph
                 {
-                    Title = input.Title,
-                    CreatedOn = DateTime.Now,
-                    Images = await cloudinaryService.UploadAsync(input.Images),
-                    Paragraphs = input.Paragraphs.Select(p => new Paragraph
-                    {
-                        Title = p.Title,
-                        Text = p.Content,
-                    }).ToList(),
-                    EventDate = input.EventDate
-                });
+                    Title = p.Title,
+                    Text = p.Content,
+                }).ToList(),
+                EventDate = input.EventDate,
+                CreatedOn = DateTime.Now,
+                Images = this.dbContext.Images.Where(x => ids.Any(i => i == x.Id)).ToList()
+            };
+            await this.dbContext.Events.AddAsync(event2);
             await this.dbContext.SaveChangesAsync();
         }
 

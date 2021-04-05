@@ -1,64 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-using Schuellerrat.Models;
-
-namespace Schuellerrat.Services
+﻿namespace Schuellerrat.Services
 {
+    using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Threading.Tasks;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
+    using Models;
+    using Data;
+
     public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary cloudinary;
+        private readonly ApplicationDbContext dbContext;
 
-        public CloudinaryService(Cloudinary cloudinary)
+        public CloudinaryService(Cloudinary cloudinary, ApplicationDbContext dbContext)
         {
             this.cloudinary = cloudinary;
+            this.dbContext = dbContext;
         }
 
-        public async Task<ICollection<Image>> UploadAsync(ICollection<IFormFile> files)
+        public async Task<ICollection<int>> UploadAsync(ICollection<IFormFile> files, string path)
         {
-            try
+            ICollection<Image> images = new List<Image>();
+
+            foreach (var file in files)
             {
-                ICollection<Image> images = new List<Image>();
-
-                    var memoryStream = new MemoryStream();
-                    byte[] destinationImage;
-
-                    
-
-                    foreach (var file in files)
-                    {
-
-                        await file.CopyToAsync(memoryStream);
-                        destinationImage = memoryStream.ToArray();
-
-                        var destinationStream = new MemoryStream(destinationImage);
-                        string fileName = file.FileName;
-                        fileName = fileName.Replace("&", "And");
-                        var uploadParams = new ImageUploadParams()
-                        {
-                            File = new FileDescription(fileName, destinationStream),
-                            PublicId = fileName,
-                        };
-
-                        var result = await this.cloudinary.UploadAsync(uploadParams);
-                        images.Add(new Image
-                        {
-                            Path = result.Uri.AbsoluteUri,
-                        });
-                    }
-
-                return images;
+                images.Add(await this.UploadImageAsync(file, path));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
+
+            await this.dbContext.Images.AddRangeAsync(images);
+            await this.dbContext.SaveChangesAsync();
+
+            return images.Select(x => x.Id).ToList();
         }
 
         public async Task DeleteImage(Cloudinary cloudinary, string name)
@@ -72,14 +48,43 @@ namespace Schuellerrat.Services
             await cloudinary.DeleteResourcesAsync(delParams);
         }
 
-        private async Task CopyFilesAsync(StreamReader Source, StreamWriter Destination)
+        private async Task<Image> UploadImageAsync(IFormFile file, string path)
         {
-            char[] buffer = new char[0x1000];
-            int numRead;
-            while ((numRead = await Source.ReadAsync(buffer, 0, buffer.Length)) != 0)
+            try
             {
-                await Destination.WriteAsync(buffer, 0, numRead);
+                string filePath = path + file.FileName;
+                byte[] destinationImage;
+                Directory.CreateDirectory(path);
+                await using Stream fileStream = new FileStream(filePath, FileMode.Create);
+                await file.CopyToAsync(fileStream);
+                fileStream.Close();
+                destinationImage = await File.ReadAllBytesAsync(filePath);
+
+                 using var destinationStream = new MemoryStream(destinationImage);
+                string fileName = file.FileName;
+                fileName = fileName.Replace("&", "And");
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(fileName, destinationStream),
+                    PublicId = fileName,
+                };
+                
+                var result = await this.cloudinary.UploadAsync(uploadParams);
+                
+                var img = new Image
+                {
+                    Path = result.Url.AbsoluteUri,
+                };
+                File.Delete(filePath);
+                return img;
+
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
         }
     }
 }

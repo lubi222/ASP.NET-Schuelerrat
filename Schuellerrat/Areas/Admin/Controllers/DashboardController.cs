@@ -1,9 +1,12 @@
 ﻿namespace Schuellerrat.Areas.Admin.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using InputModels;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Services;
     using ViewModels;
@@ -13,11 +16,15 @@
     {
         private readonly IDashboardService dashboardService;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public DashboardController(IDashboardService dashboardService, ICloudinaryService cloudinaryService)
+        public DashboardController(IDashboardService dashboardService, 
+            ICloudinaryService cloudinaryService,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.dashboardService = dashboardService;
             this.cloudinaryService = cloudinaryService;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -36,9 +43,23 @@
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult AddEvent(AddEventInputModel input)
+        public async Task<IActionResult> AddEvent(AddEventInputModel input)
         {
-            this.dashboardService.AddEvent(input, this.cloudinaryService);
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("error");
+            }
+
+            try
+            {
+                await this.dashboardService.AddEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+           
             return this.RedirectToAction("Index");
         }
     }
