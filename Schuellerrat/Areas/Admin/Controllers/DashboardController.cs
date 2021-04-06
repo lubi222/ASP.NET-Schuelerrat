@@ -63,8 +63,11 @@
 
         [Authorize(Roles = "admin")]
         [HttpGet]
-        public IActionResult EditEvent(int id)
+        public IActionResult EditEvent(int id, int bonusId)
         {
+            int bonusParagraphsCount = -1;
+
+
             var oldEvent = this.eventsService.GetSingleEvent(id);
 
             var paragraphDict = new Dictionary<string, string>();
@@ -95,6 +98,7 @@
                     Path = x.Path,
                     Id = x.Id
                 }).ToList(),
+                BonusParagraphsCount = bonusId+1,
                 Paragraphs = filledParagraphs,
                 ParagraphTitles = oldEvent.ParagraphTitles,
                 ParagraphTexts = oldEvent.ParagraphTexts
@@ -104,9 +108,9 @@
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> EditEvent(EditInputModel input, int id)
+        public async Task<IActionResult> EditEvent(EditInputModel input, int editEventId)
         {
-            input.Id = id;
+            input.Id = editEventId;
             if (!ModelState.IsValid)
             {
                 return this.View(input);

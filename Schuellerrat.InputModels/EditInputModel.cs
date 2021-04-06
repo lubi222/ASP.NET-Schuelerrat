@@ -39,5 +39,7 @@
         public ICollection<string> ParagraphTitles { get; set; }
 
         public ICollection<string> ParagraphTexts { get; set; }
+
+        public int BonusParagraphsCount { get; set; }
     }
 }
