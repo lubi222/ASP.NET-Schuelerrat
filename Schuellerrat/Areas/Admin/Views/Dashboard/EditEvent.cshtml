@@ -12,7 +12,6 @@
     {
         <div class="alert alert-success alert-dismissible show" role="alert">
             @this.TempData["message"]
-            Image Deleted Successfully
             <button style="padding: 0; height: auto" type="button" class="close" data-dismiss="alert" aria-label="Close">
                 &times;
             </button>
@@ -31,7 +30,8 @@
 
         <div class="input-group date d-flex mb-5" data-provide="datepicker">
             <h4>Дата на провеждане</h4>
-            <input type="hidden" class="form-control" asp-for="@Model.EventDate">
+            <input type="text" class="form-control" asp-for="@Model.EventDate" style="width: 90%">
+
             <span class="text-danger" asp-validation-for="@Model.EventDate"></span>
             <div class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
                 <i class="fas fa-chevron-down"></i>
@@ -88,8 +88,8 @@
             $("#datepicker").datepicker({
                 autoclose: true,
                 todayHighlight: true,
-                toggleActive: true
-            }).datepicker('update', new Date());
+                toggleActive: true,
+            }).datepicker('update', new Date(1999,04,07));
             
         });
     </script>

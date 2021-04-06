@@ -3,7 +3,7 @@
 
 <div class="container">
     <h2 class="mb-5">Добави събитие</h2>
-    <form asp-controller="Dashboard" asp-action="AddEvent" method="post" enctype="multipart/form-data">
+    <form autocomplete="off" asp-controller="Dashboard" asp-action="AddEvent" method="post" enctype="multipart/form-data">
 
         <div class="form-group">
             <h4>Заглавие</h4>
@@ -12,18 +12,18 @@
             <span class="text-danger" asp-validation-for="Title"></span>
         </div>
 
-        <div class="input-group date d-flex mb-5" data-provide="datepicker" >
+        <div class="input-group date d-flex mb-5" data-provide="datepicker">
             <h4>Дата на провеждане</h4>
-            <input type="hidden" class="form-control" asp-for="EventDate">
+            <input  type="text" class="form-control" asp-for="EventDate" style="width: 90%">
             <span class="text-danger" asp-validation-for="EventDate"></span>
-            <div class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
+            <div onclick="logDate()" class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
                 <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
         <div class="form-group mb-5">
             <h4>Изображения</h4>
-            <input asp-for="Images" class="form-control" />
+            <input autocomplete="off" asp-for="Images" class="form-control"/>
             <span asp-validation-for="Images" class="text-danger"></span>
         </div>
 
@@ -45,7 +45,9 @@
         $(function () {
             $("#datepicker").datepicker({
                 autoclose: true,
-                todayHighlight: true
+                todayHighlight: true,
+                toggleActive: true,
+                format: 'd/m/yyyy'
             }).datepicker('update', new Date());
         });
     </script>
@@ -53,6 +55,7 @@
     <script>
         var room = 1;
         var paragraphIndex = 0;
+
         function education_fields() {
             room++;
             var objTo = document.getElementById('education_fields')
@@ -64,7 +67,6 @@
             console.log("paragraph index updated", paragraphIndex);
 
 
-
             objTo.appendChild(divtest)
             paragraphIndex++;
 
@@ -72,10 +74,12 @@
             console.log("all the paragraphs in HTML", allCreatedParagraphs);
 
         }
+
         function remove_education_fields(rid) {
             $('.removeclass' + rid).remove();
         }
+
     </script>
-    
+
 }
 
