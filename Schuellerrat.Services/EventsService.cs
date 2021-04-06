@@ -30,8 +30,9 @@
                 {
                     Id = x.Id,
                     Title = x.Title,
-                    ParagraphTitles = x.Paragraphs.Select(pti => pti.Title).ToList(),
-                    ParagraphTexts = x.Paragraphs.Select(pte => pte.Text).ToList(),
+                    ParagraphIds = x.Paragraphs.Select(p => p.Id).ToList(),
+                    ParagraphTitles = x.Paragraphs.Select(p => p.Title).ToList(),
+                    ParagraphTexts = x.Paragraphs.Select(p => p.Text).ToList(),
                     Images = x.Images.Select(i => new ImageViewModel
                     {
                         Path = i.Path,

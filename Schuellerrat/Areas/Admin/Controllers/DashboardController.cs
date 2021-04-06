@@ -72,29 +72,76 @@ namespace Schuellerrat.Areas.Admin.Controllers
 
             var oldEvent = this.eventsService.GetSingleEvent(id);
 
-            var paragraphDict = new Dictionary<string, string>();
+            var toBeParagraphsCount = oldEvent.ParagraphTitles.Count;
+            // make all the paragraphs and then make them unique(maybe)
 
-            for (int i = 0; i < oldEvent.ParagraphTitles.Count; i++)
-            {
-                if (!paragraphDict.ContainsKey(oldEvent.ParagraphTitles.ToList()[i]))
-                {
-                    paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], oldEvent.ParagraphTexts.ToList()[i]);
-                }
-            }
+            #region OldParagraphLogic(=cap)
+
+            //var paragraphDict = new Dictionary<string, string>();
+
+            //for (int i = 0; i < oldEvent.ParagraphTitles.Count; i++)
+            //{
+            //    if (!paragraphDict.ContainsKey(oldEvent.ParagraphTitles.ToList()[i]))
+            //    {
+            //        paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], oldEvent.ParagraphTexts.ToList()[i]);
+            //    }
+            //}
+
+            //var filledParagraphs = new List<ParagraphInputModel>();
+
+            //foreach (var (key, value) in paragraphDict)
+            //{
+            //    if (!filledParagraphs.Any(p => p.Title == key))
+            //    {
+            //        filledParagraphs.Add(new ParagraphInputModel
+            //        {
+
+            //            Title = key,
+            //            Content = value
+            //        });
+            //    }
+            //}
+
+
+            // (title, (text, id))
+            // Dictionary<Title, Dictionary<Text, Id>>
+            //var paragraphDict = new Dictionary<string, Dictionary<string, int>>();
+            //for (int i = 0; i < oldEvent.ParagraphTitles.Count; i++)
+            //{
+            //    if (!paragraphDict.ContainsKey(oldEvent.ParagraphTitles.ToList()[i]))
+            //    {
+            //        paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], new Dictionary<string, int>(){{ oldEvent.ParagraphTexts.ToList()[i], oldEvent.ParagraphIds.ToList()[i] } });
+            //        //paragraphDict[oldEvent.ParagraphTitles.ToList()[i]].Add(oldEvent.ParagraphTexts.ToList()[i], oldEvent.ParagraphIds.ToList()[i]);
+            //    }
+            //}
+
+
+            //for (int i = 0; i < paragraphDict.Count; i++)
+            //{
+            //    if (!filledParagraphs.Any(p => p.Title == paragraphDict.ElementAt(i).Key))
+            //    {
+            //        filledParagraphs.Add(new ParagraphInputModel
+            //        {
+            //            Title = paragraphDict.ElementAt(i).Key,
+            //            Content = paragraphDict.ElementAt(i).Value.ElementAt(i).Key,
+            //            Id = paragraphDict.ElementAt(i).Value.ElementAt(i).Value,
+            //        });
+            //    }
+            //}
+            #endregion
 
             var filledParagraphs = new List<ParagraphInputModel>();
 
-            foreach (var (key, value) in paragraphDict)
+            for (int i = 0; i < toBeParagraphsCount; i++)
             {
-                if (!filledParagraphs.Any(p => p.Title == key))
+                filledParagraphs.Add(new ParagraphInputModel
                 {
-                    filledParagraphs.Add(new ParagraphInputModel
-                    {
-                        Title = key,
-                        Content = value
-                    });
-                }
+                    Id = oldEvent.ParagraphIds.ToList()[0],
+                    Title = oldEvent.ParagraphTitles.ToList()[0],
+                    Content = oldEvent.ParagraphTexts.ToList()[0],
+                });
             }
+
 
             var newEvent = new EditInputModel
             {
@@ -136,11 +183,19 @@ namespace Schuellerrat.Areas.Admin.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteImage(int id, int eventId)
         {
-            await this.dashboardService.DeleteImage(id);
+            await this.dashboardService.DeleteImageAsync(id);
             this.TempData["message"] = "Image deleted successfully.";
             var editViewModel = this.eventsService.GetSingleEvent(eventId);
-            //return this.View("EditEvent", new EditModel{SingleEventViewModel = editViewModel});
             return this.RedirectToAction("EditEvent", editViewModel);
         }
+
+        //[Authorize(Roles = "admin")]
+        //public async Task<IActionResult> DeleteParagraph(int id, int eventId)
+        //{
+        //    await this.dashboardService.DeleteImage(id);
+        //    var editViewModel = this.eventsService.GetSingleEvent(eventId);
+        //    //return this.View("EditEvent", new EditModel{SingleEventViewModel = editViewModel});
+        //    return this.RedirectToAction("EditEvent", editViewModel);
+        //}
     }
 }

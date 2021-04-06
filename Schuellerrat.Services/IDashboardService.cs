@@ -17,6 +17,8 @@
 
         public Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath);
 
-        public Task DeleteImage(int id);
+        public Task DeleteImageAsync(int id);
+
+        public Task DeleteParagraphAsync(int id);
     }
 }

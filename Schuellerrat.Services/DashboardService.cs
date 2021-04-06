@@ -109,11 +109,18 @@ namespace Schuellerrat.Services
             await this.dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteImage(int id)
+        public async Task DeleteImageAsync(int id)
         {
             var imageToRemove = await this.dbContext.Images.FirstOrDefaultAsync(i => i.Id == id);
             this.dbContext.Images.Remove(imageToRemove);
-            await dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteParagraphAsync(int id)
+        {
+            var paragraphToRemove = await this.dbContext.Paragraphs.FirstOrDefaultAsync(p => p.Id == id);
+            this.dbContext.Paragraphs.Remove(paragraphToRemove);
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }

@@ -40,16 +40,16 @@
 
         @foreach (var image in @Model.OldImages)
         {
-            <img style="max-height: 300px" src="@image.Path"/>
+            <img style="max-height: 300px" src="@image.Path" />
 
             <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteImage" asp-route-id="@image.Id" asp-route-eventId="@Model.Id">X</a>
 
         }
 
         <div class="form-group mb-5">
-                <h4>Добави изображения</h4>
-                <input asp-for="@Model.Images" class="form-control" />
-                <span asp-validation-for="@Model.Images" class="text-danger"></span>
+            <h4>Добави изображения</h4>
+            <input asp-for="@Model.Images" class="form-control" />
+            <span asp-validation-for="@Model.Images" class="text-danger"></span>
         </div>
 
         <div id="education_fields_container">
@@ -61,18 +61,24 @@
 
                 @for (int i = 0; i < @Model.Paragraphs.Count; i++)
                 {
-                    <div class='form-group'>
-                        Заглавие:
-                        <input type='text' value="@Model.Paragraphs.ToList()[i].Title" name="Paragraphs[@i].Title" id=''/>
-                        @*<span asp-validation-for='Paragraphs.ToList()[i].Title' class='text-danger'></span>*@
-                        Текст: <input type='text' value="@Model.Paragraphs.ToList()[i].Content" name="Paragraphs[@i].Content" id=''/>
-                        @*<span asp-validation-for='Paragraphs.ToList()[i].Content' class='text-danger'></span>*@
-                    </div>
-                    <div>
-                        <button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+                    <div class="custom-paragraph-container">
+
+                        <div class='form-group'>
+                            Заглавие:
+                            <input type='text' value="@Model.Paragraphs.ToList()[i].Title" name="Paragraphs[@i].Title" id='' />
+                            @*<span asp-validation-for='Paragraphs.ToList()[i].Title' class='text-danger'></span>*@
+                            Текст: <input type='text' value="@Model.Paragraphs.ToList()[i].Content" name="Paragraphs[@i].Content" id='' />
+                            @*<span asp-validation-for='Paragraphs.ToList()[i].Content' class='text-danger'></span>*@
+                        </div>
+                        <div>
+                            <button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+                        </div>
+                        <div>
+                            <button class='delete-btn btn btn-danger float-right' type='button' onclick='delete_paragraph_from_database_and_remove_html(@Model.Paragraphs.ToList()[i].Id);'><span class='' aria-hidden='true'>X</span></button>
+                        </div>
                     </div>
                 }
-                
+
 
 
             </div>
@@ -80,23 +86,27 @@
 
         <button type="submit" class="btn btn-primary pl-5 pr-5 mb-5">Завърши</button>
     </form>
+    <form method="post" id="antiForgeryForm"></form>
 </div>
+
+
 
 @section Scripts{
     <script>
-        $(function () {
+        $(function() {
             $("#datepicker").datepicker({
                 autoclose: true,
                 todayHighlight: true,
                 toggleActive: true,
-            }).datepicker('update', new Date(1999,04,07));
-            
+            }).datepicker('update', new Date(1999, 04, 07));
+
         });
     </script>
 
     <script>
         var room = 1;
         var j = @Model.ParagraphTexts.Count;
+
         function education_fields() {
             room++;
             var objTo = document.getElementById('education_fields')
@@ -104,22 +114,73 @@
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
 
-            divtest.innerHTML = "<div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
+            divtest.innerHTML = "<div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div>";
             console.log("paragraph index updated", j);
-
 
 
             objTo.appendChild(divtest)
             j++;
-        value
+            value
             var allCreatedParagraphs = $("#education_fields_container").prop("outerHTML");
             console.log("all the paragraphs in HTML", allCreatedParagraphs);
 
         }
+
         function remove_education_fields(rid) {
             $('.removeclass' + rid).remove();
+        }
+
+        // only the server-generated delete buttons have this function
+        function delete_paragraph_from_database_and_remove_html(id) {
+
+            var antiForgeryToken = $("#antiForgeryForm > input[name=__RequestVerificationToken]").val();
+            console.log("sending request to API Controller with id: ", id);
+            var data = { id: id };
+            $.ajax({
+                type: "POST",
+                url: "/api/Paragraphs",
+                //method: "POST",
+                data: JSON.stringify(data),
+                headers: {
+                    "X-CSRF-TOKEN": antiForgeryToken,
+                },
+                success: function() {
+                    console.log("SUCCESS!")
+                },
+                contentType: "application/json"
+            })
+            console.log("request sent");
+        }
+
+        // every button with the delete-btn class removes its parent's parent(its container) on click
+        $('.delete-btn').click(function () {
+            // Now the div itself as an object is $(this)
+            console.log("click activated on: ");
+            console.log($(this));
+            console.log("parent of the parent of the element: ")
+            console.log($(this).parent().parent());
+            var container = $(this).parent().parent();
+            container.remove();
+        });
+        function removeContainer (elm) {
+            // Now the object is $(elm)
+            //$(elm).text('Saved').css('background', 'yellow');
+            console.log("object passed in: ");
+            console.log($(elm));
+            console.log("parent of the parent of the temp paragraph: ");
+            console.log($(elm).parent().parent());
+        };
+        // function to be called on temporary paragraphs and ones existing in DB
+        function remove_paragraph_HTML() {
+
         }
     </script>
 
 }
 
+@* 
+    
+
+
+
+*@

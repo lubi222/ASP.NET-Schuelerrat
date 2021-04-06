@@ -4,6 +4,8 @@
 
     public class ParagraphInputModel
     {
+        public int Id { get; set; }
+
         [MinLength(1)]
         [Required]
         public string Title { get; set; }
