@@ -71,6 +71,9 @@ namespace Schuellerrat.Services
         public async Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath)
         {
             var oldEvent = this.dbContext.Events.FirstOrDefault(e => e.Id == input.Id);
+            // get the paragraphs of the old event from the database and add them to the oldevents
+            var oldEventParagraphs = this.dbContext.Paragraphs.Where(p => p.EventId == oldEvent.Id);
+            oldEvent.Paragraphs = oldEventParagraphs.ToList();
 
             oldEvent.EventDate = input.EventDate;
 
@@ -93,7 +96,16 @@ namespace Schuellerrat.Services
                 }
             }
 
+            //oldEvent.Paragraphs = input.Paragraphs.Select(p => new Paragraph
+            //{
+            //    Title = p.Title,
+            //    Text = p.Content,
+            //    EventId = oldEvent.Id,
+            //}).ToList();
+
+
             oldEvent.Title = input.Title;
+            oldEvent.EventDate = input.EventDate;
             await this.dbContext.SaveChangesAsync();
         }
 

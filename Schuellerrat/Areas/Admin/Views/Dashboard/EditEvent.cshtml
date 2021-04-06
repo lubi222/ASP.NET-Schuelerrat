@@ -59,21 +59,18 @@
                     <button class="btn btn-success float-right" type="button" onclick="education_fields();"> <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </button>
                 </div>
 
-                @for (int i = 0; i < @Model.ParagraphTexts.Count; i++)
+                @for (int i = 0; i < @Model.Paragraphs.Count; i++)
                 {
                     <div class='form-group'>
                         Заглавие:
-                        <input type='text' asp-for="Paragraphs.ToList()[i].Title" id=''/>
-                        <span asp-validation-for='Paragraphs.ToList()[i].Title' class='text-danger'></span>
-                        Текст: <input type='text' asp-for="Paragraphs.ToList()[i].Content" id=''/>
-                        <span asp-validation-for='Paragraphs.ToList()[i].Content' class='text-danger'></span>
+                        <input type='text' value="@Model.Paragraphs.ToList()[i].Title" name="Paragraphs[@i].Title" id=''/>
+                        @*<span asp-validation-for='Paragraphs.ToList()[i].Title' class='text-danger'></span>*@
+                        Текст: <input type='text' value="@Model.Paragraphs.ToList()[i].Content" name="Paragraphs[@i].Content" id=''/>
+                        @*<span asp-validation-for='Paragraphs.ToList()[i].Content' class='text-danger'></span>*@
                     </div>
-                    <a asp-controller="Dashboard" asp-action="EditEvent" method="get" asp-route-id="@Model.Id" asp-all-route-data='new Dictionary<string, string>{{ "bonusId", "7" }}' class='input-group-btn'>
-                        @*<button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>*@
-
-                    </a>
-                    <span>@Model.BonusParagraphsCount</span>
-
+                    <div>
+                        <button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button>
+                    </div>
                 }
                 
 
@@ -90,8 +87,10 @@
         $(function () {
             $("#datepicker").datepicker({
                 autoclose: true,
-                todayHighlight: true
+                todayHighlight: true,
+                toggleActive: true
             }).datepicker('update', new Date());
+            
         });
     </script>
 
@@ -105,14 +104,14 @@
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
 
-            divtest.innerHTML = '<div class="form-group">Заглавие: <input type="text" id="" data-val="true" data-val-minlength="The field Title must be a string or array type with a minimum length of 1." data-val-minlength-min="1" data-val-required="The Title field is required." name="Paragraphs[' + j + '].Title" value="asdfsadfasdfasfasdfasd"><span class="text-danger field-validation-valid" data-valmsg-for="Paragraphs[' + j + '].Title" data-valmsg-replace="true"></span>Текст: <input type="text" id="" data-val="true" data-val-minlength="The field Content must be a string or array type with a minimum length of 10." data-val-minlength-min="10" data-val-required="The Content field is required." name="Paragraphs[' + j + '].Content" value="asdfsadfasdfasfasdfasd" ><span class="text-danger field-validation-valid" data-valmsg-for="Paragraphs[' + j + '].Content" data-valmsg-replace="true"></span></div>';
+            divtest.innerHTML = "<div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button></div>";
             console.log("paragraph index updated", j);
 
 
 
             objTo.appendChild(divtest)
             j++;
-
+        value
             var allCreatedParagraphs = $("#education_fields_container").prop("outerHTML");
             console.log("all the paragraphs in HTML", allCreatedParagraphs);
 

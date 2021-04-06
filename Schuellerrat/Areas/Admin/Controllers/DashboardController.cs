@@ -1,4 +1,6 @@
-﻿namespace Schuellerrat.Areas.Admin.Controllers
+﻿using System.Globalization;
+
+namespace Schuellerrat.Areas.Admin.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -74,25 +76,31 @@
 
             for (int i = 0; i < oldEvent.ParagraphTitles.Count; i++)
             {
-                paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], oldEvent.ParagraphTexts.ToList()[i]);
+                if (!paragraphDict.ContainsKey(oldEvent.ParagraphTitles.ToList()[i]))
+                {
+                    paragraphDict.Add(oldEvent.ParagraphTitles.ToList()[i], oldEvent.ParagraphTexts.ToList()[i]);
+                }
             }
 
             var filledParagraphs = new List<ParagraphInputModel>();
 
             foreach (var (key, value) in paragraphDict)
             {
-                filledParagraphs.Add(new ParagraphInputModel
+                if (!filledParagraphs.Any(p => p.Title == key))
                 {
-                    Title = key,
-                    Content = value
-                });
+                    filledParagraphs.Add(new ParagraphInputModel
+                    {
+                        Title = key,
+                        Content = value
+                    });
+                }
             }
 
             var newEvent = new EditInputModel
             {
                 Id = id,
                 Title = oldEvent.Title,
-                EventDate = DateTime.Parse(oldEvent.EventDate),
+                EventDate = DateTime.ParseExact(oldEvent.EventDate,"dd/MM/yyyy", CultureInfo.InvariantCulture),
                 OldImages = oldEvent.Images.Select(x => new Image
                 {
                     Path = x.Path,
@@ -103,7 +111,9 @@
                 ParagraphTitles = oldEvent.ParagraphTitles,
                 ParagraphTexts = oldEvent.ParagraphTexts
             };
+            
             return this.View(newEvent);
+
         }
 
         [Authorize(Roles = "admin")]
@@ -117,6 +127,7 @@
             }
 
             await this.dashboardService.EditEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
+
 
 
             return this.RedirectToAction("Index");
