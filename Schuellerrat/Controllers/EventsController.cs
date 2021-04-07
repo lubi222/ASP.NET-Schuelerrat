@@ -13,7 +13,7 @@
         }
         public IActionResult All()
         {
-            var events = this.eventsService.GetAllEvents();
+            var events = this.eventsService.GetEventsOnAllPage();
             return this.View(events);
         }
 

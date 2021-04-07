@@ -1,7 +1,7 @@
 ﻿@using System.Linq
 @using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal.Account.Manage
 @using Schuellerrat.InputModels
-@model Schuellerrat.InputModels.EditEventInputModel
+@model Schuellerrat.InputModels.EditArticleInputModel
 
 <div class="container">
     @if (this.TempData.ContainsKey("message"))
@@ -14,7 +14,7 @@
         </div>
     }
     <h2 class="mb-5">Промени събитие</h2>
-    <form asp-controller="Dashboard" asp-action="EditEvent" method="post" asp-route-editEventId="@Model.Id" enctype="multipart/form-data">
+    <form asp-controller="Dashboard" asp-action="EditArticle" method="post" asp-route-articleId="@Model.Id" enctype="multipart/form-data">
 
         <div class="form-group">
             <h4>Заглавие</h4>
@@ -23,21 +23,11 @@
             <span class="text-danger" asp-validation-for="@Model.Title"></span>
         </div>
 
-        <div class="input-group date d-flex mb-5" data-provide="datepicker">
-            <h4>Дата на провеждане</h4>
-            <input type="text" class="form-control" asp-for="@Model.EventDate" style="width: 90%">
-
-            <span class="text-danger" asp-validation-for="@Model.EventDate"></span>
-            <div class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
-                <i class="fas fa-chevron-down"></i>
-            </div>
-        </div>
-
         @foreach (var image in @Model.OldImages)
         {
             <img style="max-height: 300px" src="@image.Path" />
 
-            <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteImage" asp-route-id="@image.Id" asp-route-eventId="@Model.Id">X</a>
+            <a class="btn btn-danger" asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteImage" asp-route-id="@image.Id">X</a>
 
         }
 

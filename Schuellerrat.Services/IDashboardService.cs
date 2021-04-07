@@ -7,19 +7,7 @@
 
     public interface IDashboardService
     {
-        public ICollection<AllContentViewModel> GetAllArticles();
-
-        public ICollection<AllContentViewModel> GetAllEvents();
-
-        public Task AddEvent(AddEventInputModel input, ICloudinaryService cloudinaryService, string basePath);
-
-        public Task AddArticle(AddArticleInputModel input);
-
-        public Task EditEvent(EditInputModel input, ICloudinaryService cloudinaryService, string basePath);
-
         public Task DeleteImageAsync(int id);
-
-        public Task DeleteEventAsync(int id);
 
         public Task DeleteParagraphAsync(int id);
     }

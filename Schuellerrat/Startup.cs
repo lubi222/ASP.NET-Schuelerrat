@@ -49,6 +49,7 @@ namespace Schuellerrat
             services.AddTransient<IClubListService, ClubListService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<IArticlesService, ArticlesService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));

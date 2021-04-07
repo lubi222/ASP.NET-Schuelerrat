@@ -6,9 +6,9 @@
     using Microsoft.AspNetCore.Http;
     using Models;
 
-    public class EditInputModel
+    public class EditEventInputModel
     {
-        public EditInputModel()
+        public EditEventInputModel()
         {
             this.Images = new List<IFormFile>();
             this.OldImages = new List<Image>();

@@ -1,19 +1,28 @@
 ﻿namespace Schuellerrat.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Data;
+    using InputModels;
     using Microsoft.EntityFrameworkCore;
+    using Models;
     using ViewModels;
 
     public class EventsService : IEventsService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly Cloudinary cloudinary;
 
-        public EventsService(ApplicationDbContext dbContext)
+        public EventsService(ApplicationDbContext dbContext, ICloudinaryService cloudinaryService, Cloudinary cloudinary)
         {
             this.dbContext = dbContext;
+            this.cloudinaryService = cloudinaryService;
+            this.cloudinary = cloudinary;
         }
 
         public SingleEventViewModel GetSingleEvent(int id)
@@ -43,7 +52,7 @@
                 }).FirstOrDefault();
         }
 
-        ICollection<AllEventsViewModel> IEventsService.GetAllEvents()
+        public ICollection<AllEventsViewModel> GetEventsOnAllPage()
         {
             return this.dbContext
                 .Events
@@ -55,6 +64,83 @@
                     Month = x.EventDate.Month.ToString(CultureInfo.CreateSpecificCulture("bg-BG").DateTimeFormat.AbbreviatedMonthNames[x.EventDate.Month - 1]),
                     ShortDescription = x.Paragraphs.Any() != true ? null : string.Join(" ", x.Paragraphs.FirstOrDefault().Text.Split().Take(15)) + "..."
                 }).ToList();
+        }
+
+        public ICollection<AllContentViewModel> GetEventsOnAdminPage()
+        {
+            return this.dbContext
+                .Events
+                .Select(x => new AllContentViewModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    CreatedOn = x.CreatedOn.ToString("dd/MM/yyyy")
+                })
+                .ToList();
+        }
+
+        public async Task AddEvent(AddEventInputModel input, string basePath)
+        {
+            await this.dbContext.Events.AddAsync(new Event
+            {
+                Title = input.Title,
+                Paragraphs = input.Paragraphs?.Select(p => new Paragraph
+                {
+                    Title = p.Title,
+                    Text = p.Content,
+                }).ToList(),
+                EventDate = input.EventDate,
+                CreatedOn = DateTime.Now,
+                Images = input.Images != null ? await this.cloudinaryService.UploadAsync(input.Images, basePath) : null
+            });
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task EditEvent(EditEventInputModel input, string basePath)
+        {
+            var oldEvent = this.dbContext.Events.FirstOrDefault(e => e.Id == input.Id);
+            var oldEventParagraphs = this.dbContext.Paragraphs.Where(p => p.EventId == oldEvent.Id);
+            oldEvent.Paragraphs = oldEventParagraphs.ToList();
+
+            oldEvent.EventDate = input.EventDate;
+
+            var images = await this.cloudinaryService.UploadAsync(input.Images, basePath);
+            foreach (var img in images)
+            {
+                oldEvent.Images.Add(img);
+            }
+
+            foreach (var paragraph in input.Paragraphs)
+            {
+                if (!oldEvent.Paragraphs.Any(p => p.Title == paragraph.Title))
+                {
+                    oldEvent.Paragraphs.Add(new Paragraph
+                    {
+                        Title = paragraph.Title,
+                        Text = paragraph.Content,
+                        EventId = oldEvent.Id,
+                    });
+                }
+            }
+
+            oldEvent.Title = input.Title;
+            oldEvent.EventDate = input.EventDate;
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteEventAsync(int id)
+        {
+            var eventToRemove = await this.dbContext.Events.Include(x => x.Images).FirstOrDefaultAsync(i => i.Id == id);
+            
+            if (eventToRemove.Images.Any())
+            {
+                var imagePaths = eventToRemove.Images.Select(x => x.Path).ToArray();
+                await this.cloudinaryService.DeleteImagesAsync(cloudinary, imagePaths);
+            }
+
+            this.dbContext.Events.Remove(eventToRemove);
+
+            await this.dbContext.SaveChangesAsync();
         }
     }
 }
