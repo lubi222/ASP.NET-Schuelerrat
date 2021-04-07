@@ -53,7 +53,9 @@
                         <a asp-area="Admin" asp-controller="Dashboard" asp-action="EditEvent" asp-route-id="@singleEvent.Id">
                             <button class="btn btn-warning">Промяна</button>
                         </a>
-                        <button class="btn btn-danger">Премахване</button>
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteEvent" asp-route-id="@singleEvent.Id">
+                            <button class="btn btn-danger">Премахване</button>
+                        </a>
                     </td>
                 </tr>
             }

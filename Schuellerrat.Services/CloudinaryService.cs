@@ -34,12 +34,20 @@
             return images;
         }
 
-        public async Task DeleteImage(Cloudinary cloudinary, string name)
+        public async Task DeleteImageAsync(Cloudinary cloudinary, string path)
         {
+            var imgName = GetImageName(path);
+            var delParams = new DeletionParams(imgName);
+            await cloudinary.DestroyAsync(delParams);
+        }
+
+        public async Task DeleteImagesAsync(Cloudinary cloudinary, string[] paths)
+        {
+            var names = paths.Select(GetImageName).ToList();
+
             var delParams = new DelResParams()
             {
-                PublicIds = new List<string>() { name },
-                Invalidate = true,
+                PublicIds = names
             };
 
             await cloudinary.DeleteResourcesAsync(delParams);
@@ -60,10 +68,11 @@
                 await using var destinationStream = new MemoryStream(destinationImage);
                 string fileName = file.FileName;
                 fileName = fileName.Replace("&", "And");
+                fileName = fileName.Replace("#", "Hashtag");
                 var uploadParams = new ImageUploadParams()
                 {
-                    File = new FileDescription(fileName, destinationStream),
-                    PublicId = fileName,
+                    File = new FileDescription(fileName.Split(".")[0], destinationStream),
+                    PublicId = fileName.Split(".")[0],
                 };
                 
                 var result = await this.cloudinary.UploadAsync(uploadParams);
@@ -82,6 +91,11 @@
                 throw;
             }
 
+        }
+
+        private string GetImageName(string path)
+        {
+            return path.Split("/").TakeLast(1).ToList()[0].Split(".").ToList()[0];
         }
     }
 }

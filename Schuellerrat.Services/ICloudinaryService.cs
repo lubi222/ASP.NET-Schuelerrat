@@ -10,6 +10,8 @@ namespace Schuellerrat.Services
     {
         public Task<ICollection<Image>> UploadAsync(ICollection<IFormFile> files, string basePath);
 
-        public Task DeleteImage(Cloudinary cloudinary, string name);
+        public Task DeleteImageAsync(Cloudinary cloudinary, string path);
+
+        public Task DeleteImagesAsync(Cloudinary cloudinary, string[] paths);
     }
 }

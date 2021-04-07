@@ -175,8 +175,6 @@ namespace Schuellerrat.Areas.Admin.Controllers
 
             await this.dashboardService.EditEvent(input, this.cloudinaryService, $"{this.webHostEnvironment.WebRootPath}/img/");
 
-
-
             return this.RedirectToAction("Index");
         }
 
@@ -189,13 +187,12 @@ namespace Schuellerrat.Areas.Admin.Controllers
             return this.RedirectToAction("EditEvent", editViewModel);
         }
 
-        //[Authorize(Roles = "admin")]
-        //public async Task<IActionResult> DeleteParagraph(int id, int eventId)
-        //{
-        //    await this.dashboardService.DeleteImage(id);
-        //    var editViewModel = this.eventsService.GetSingleEvent(eventId);
-        //    //return this.View("EditEvent", new EditModel{SingleEventViewModel = editViewModel});
-        //    return this.RedirectToAction("EditEvent", editViewModel);
-        //}
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            await this.dashboardService.DeleteEventAsync(id);
+            this.TempData["message"] = "Event deleted successfully.";
+            return this.RedirectToAction("Index");
+        }
     }
 }

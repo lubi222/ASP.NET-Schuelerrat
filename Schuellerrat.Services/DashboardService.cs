@@ -6,6 +6,7 @@ namespace Schuellerrat.Services
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Data;
     using InputModels;
     using Models;
@@ -14,10 +15,14 @@ namespace Schuellerrat.Services
     public class DashboardService : IDashboardService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly Cloudinary cloudinary;
 
-        public DashboardService(ApplicationDbContext dbContext)
+        public DashboardService(ApplicationDbContext dbContext, ICloudinaryService cloudinaryService, Cloudinary cloudinary)
         {
             this.dbContext = dbContext;
+            this.cloudinaryService = cloudinaryService;
+            this.cloudinary = cloudinary;
         }
 
         public ICollection<AllContentViewModel> GetAllArticles()
@@ -96,14 +101,6 @@ namespace Schuellerrat.Services
                 }
             }
 
-            //oldEvent.Paragraphs = input.Paragraphs.Select(p => new Paragraph
-            //{
-            //    Title = p.Title,
-            //    Text = p.Content,
-            //    EventId = oldEvent.Id,
-            //}).ToList();
-
-
             oldEvent.Title = input.Title;
             oldEvent.EventDate = input.EventDate;
             await this.dbContext.SaveChangesAsync();
@@ -113,6 +110,18 @@ namespace Schuellerrat.Services
         {
             var imageToRemove = await this.dbContext.Images.FirstOrDefaultAsync(i => i.Id == id);
             this.dbContext.Images.Remove(imageToRemove);
+            await this.cloudinaryService.DeleteImageAsync(cloudinary, imageToRemove.Path);
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteEventAsync(int id)
+        {
+            var eventToRemove = await this.dbContext.Events.Include(x => x.Images).FirstOrDefaultAsync(i => i.Id == id);
+            var imagePaths = eventToRemove.Images.Select(x => x.Path).ToArray();
+
+            await this.cloudinaryService.DeleteImagesAsync(cloudinary, imagePaths);
+            this.dbContext.Events.Remove(eventToRemove);
+
             await this.dbContext.SaveChangesAsync();
         }
 

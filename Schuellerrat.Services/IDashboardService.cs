@@ -19,6 +19,8 @@
 
         public Task DeleteImageAsync(int id);
 
+        public Task DeleteEventAsync(int id);
+
         public Task DeleteParagraphAsync(int id);
     }
 }

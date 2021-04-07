@@ -62,7 +62,6 @@
                 @for (int i = 0; i < @Model.Paragraphs.Count; i++)
                 {
                     <div class="custom-paragraph-container">
-
                         <div class='form-group'>
                             Заглавие:
                             <input type='text' value="@Model.Paragraphs.ToList()[i].Title" name="Paragraphs[@i].Title" id='' />
@@ -78,9 +77,6 @@
                         </div>
                     </div>
                 }
-
-
-
             </div>
         </div>
 
@@ -114,7 +110,7 @@
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
 
-            divtest.innerHTML = "<div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div>";
+            divtest.innerHTML = "<div class='custom-paragraph-container'><div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div></div>";
             console.log("paragraph index updated", j);
 
 
@@ -169,6 +165,8 @@
             console.log($(elm));
             console.log("parent of the parent of the temp paragraph: ");
             console.log($(elm).parent().parent());
+            var elmToRemove = $(elm).parent().parent().parent();
+            elmToRemove.remove();
         };
         // function to be called on temporary paragraphs and ones existing in DB
         function remove_paragraph_HTML() {
@@ -177,10 +175,3 @@
     </script>
 
 }
-
-@* 
-    
-
-
-
-*@

@@ -28,6 +28,25 @@
         {
             base.OnModelCreating(modelBuilder);
             //Fluent API
+            modelBuilder.Entity<Event>()
+                .HasMany(x => x.Images)
+                .WithOne(x => x.Event)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Event>()
+                .HasMany(x => x.Paragraphs)
+                .WithOne(x => x.Event)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Article>()
+                .HasMany(x => x.Paragraphs)
+                .WithOne(x => x.Article)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Article>()
+                .HasMany(x => x.Images)
+                .WithOne(x => x.Article)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
