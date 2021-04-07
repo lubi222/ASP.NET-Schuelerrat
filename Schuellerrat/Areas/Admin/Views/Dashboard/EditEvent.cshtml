@@ -61,7 +61,7 @@
 
                 @for (int i = 0; i < @Model.Paragraphs.Count; i++)
                 {
-                    <div class="custom-paragraph-container">
+                    <div id="@i" class="custom-paragraph-container">
                         <div class='form-group'>
                             Заглавие:
                             <input type='text' value="@Model.Paragraphs.ToList()[i].Title" name="Paragraphs[@i].Title" id='' />
@@ -94,7 +94,7 @@
                 autoclose: true,
                 todayHighlight: true,
                 toggleActive: true,
-            }).datepicker('update', new Date(1999, 04, 07));
+            }).datepicker('update', new Date());
 
         });
     </script>
@@ -110,7 +110,9 @@
             divtest.setAttribute("class", "form-group removeclass" + room);
             var rdiv = 'removeclass' + room;
 
-            divtest.innerHTML = "<div class='custom-paragraph-container'><div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div></div>";
+            //divtest.innerHTML = "<div class='custom-paragraph-container'><div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div></div>";
+            divtest.innerHTML = "<div id=" + j + " class='custom-paragraph-container'><div class='form-group'>Заглавие:<input type='text' name='Paragraphs[" + j + "].Title' id=''/>Текст: <input type='text'  name='Paragraphs[" + j + "].Content' id=''/></div><div><button class='btn btn-success float-right' type='button' onclick='education_fields();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span></button><div><button class='delete-btn btn btn-danger float-right' type='button' onclick='removeContainer(this)'><span class='' aria-hidden='true'>X</span></button></div></div></div>";
+            console.log("paragraph index updated", j);
             console.log("paragraph index updated", j);
 
 
@@ -120,6 +122,8 @@
             var allCreatedParagraphs = $("#education_fields_container").prop("outerHTML");
             console.log("all the paragraphs in HTML", allCreatedParagraphs);
 
+            //
+
         }
 
         function remove_education_fields(rid) {
@@ -128,6 +132,8 @@
 
         // only the server-generated delete buttons have this function
         function delete_paragraph_from_database_and_remove_html(id) {
+
+            console.log("function delete_paragraph_from_database_and_remove_html(" + id + ") called");
 
             var antiForgeryToken = $("#antiForgeryForm > input[name=__RequestVerificationToken]").val();
             console.log("sending request to API Controller with id: ", id);
@@ -146,32 +152,91 @@
                 contentType: "application/json"
             })
             console.log("request sent");
+
         }
 
-        // every button with the delete-btn class removes its parent's parent(its container) on click
-        $('.delete-btn').click(function () {
-            // Now the div itself as an object is $(this)
-            console.log("click activated on: ");
-            console.log($(this));
-            console.log("parent of the parent of the element: ")
-            console.log($(this).parent().parent());
-            var container = $(this).parent().parent();
-            container.remove();
+        // removes HTML of the server-rendered form-groups
+        $('.delete-btn').click(function() {
+
+            console.log("function on .delete-btn called: deleting HTML...")
+
+            var elToRemove = $(this).parent().parent();
+
+            console.log("id of the removed element: " + elToRemove.attr("id"));
+            var deletedParagraphId = elToRemove.attr("id");
+            reduceParagraphs(deletedParagraphId);
+
+            // remove element
+            elToRemove.remove();
         });
-        function removeContainer (elm) {
-            // Now the object is $(elm)
-            //$(elm).text('Saved').css('background', 'yellow');
-            console.log("object passed in: ");
-            console.log($(elm));
-            console.log("parent of the parent of the temp paragraph: ");
-            console.log($(elm).parent().parent());
-            var elmToRemove = $(elm).parent().parent().parent();
-            elmToRemove.remove();
-        };
-        // function to be called on temporary paragraphs and ones existing in DB
-        function remove_paragraph_HTML() {
 
+        // remove HTML of the temporary form-groups
+        function removeContainer(elm) {
+
+            console.log("function removeContainer(elm) CALLED: deleting HTML...");
+
+            var elToRemove = $(elm).parent().parent().parent();
+
+            console.log("eltoremove: ");
+            console.log(elToRemove);
+
+            console.log("id of the removed element: " + elToRemove.attr("id"));
+
+            var deletedParagraphId = elToRemove.attr("id");
+            reduceParagraphs(deletedParagraphId);
+
+            // remove element
+            elToRemove.remove();
+        };
+
+        function reduceParagraphs(deletedParagraphId) {
+            console.log("function reduceParagraphs(" + deletedParagraphId + ") called!")
+            // reduce the paragraphIndex by 1
+            j--;
+
+            // find all paragraph containers through the custom class
+            var paragraphContainers = $(".custom-paragraph-container");
+            console.log("all paragraphs: ");
+            console.log(paragraphContainers);
+
+            // reduce the paragraphs[i] attribute of all next paragraphs by 1 if they come after the deleted paragraph
+            for (let i = 0; i < paragraphContainers.length; i++) {
+                if ($(paragraphContainers[i]).attr("id") > deletedParagraphId) {
+                    console.log("element with higher ID found");
+                    console.log(paragraphContainers[i]);
+
+                    var elToReduce = $(paragraphContainers[i]);
+                    elToReduce.attr("id", elToReduce.attr("id") - 1);
+
+                    var elToReduceChildren = $(elToReduce.children()[0]).children();
+                    console.log(elToReduceChildren);
+
+                    for (let i = 0; i < elToReduceChildren.length; i++) {
+                        console.log(elToReduceChildren[i])
+                        var currentInputEl = $(elToReduceChildren[i]);
+
+                        var nameAttr = currentInputEl.attr("name");
+                        console.log(nameAttr);
+
+                        var nameAttrProp = nameAttr.match("\\.[a-zA-Z]+")[0];
+                        console.log(nameAttrProp);
+
+                        var nameAttrNumber = nameAttr.match("[0-9]+")[0];
+                        console.log(nameAttrNumber);
+
+                        currentInputEl.attr("name", "Paragraphs[" + (nameAttrNumber - 1) + "]" + nameAttrProp);
+                    }
+
+                    //
+                }
+            }
+
+
+            // check each custom-paragraph-container, if the id is higher than the id of the deleted one, reduce its attr by 1
         }
+
+        // give each custom-paragraph-container an id with a number, the id of the temps will be based on j
     </script>
+
 
 }
