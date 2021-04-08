@@ -16,7 +16,7 @@
     <None Include="wwwroot\css\flexslider.css" />
     <None Include="wwwroot\css\font-awesome.css" />
     <None Include="wwwroot\css\font-awesome.min.css" />
-    <None Include="wwwroot\css\owl.carousel.css" />
+    <None Include="wwwroot\css\].carousel.css" />
     <None Include="wwwroot\css\responsive.css" />
     <None Include="wwwroot\css\revolution-slider.css" />
     <None Include="wwwroot\css\shortcodes.css" />
@@ -195,6 +195,12 @@
     <Content Update="Areas\Admin\Views\Shared\_HeaderPartial.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\img2\fakli.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\img2\levski.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 

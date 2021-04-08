@@ -1497,6 +1497,7 @@ ul.curriculum li ul.section-content li.course-lesson {
 --------------------------------------------------------------------------- */
 .owl-controls {
     text-align: center;
+    display: none !important;
 }
 
 .button-right.owl-theme .owl-controls .owl-nav div:hover {

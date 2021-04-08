@@ -1,7 +1,9 @@
 ﻿namespace Schuellerrat.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Models;
 
     public class AllEventsViewModel
     {
@@ -13,6 +15,10 @@
 
         public string Month { get; set; }
 
+        public DateTime EventDate { get; set; }
+
+        public Image Cover { get; set; }
+        
         public string ShortDescription { get; set; }
     }
 }

@@ -9,18 +9,24 @@ using System.Threading.Tasks;
 
 namespace Schuellerrat.Controllers
 {
+    using Services;
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IEventsService eventsService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IEventsService eventsService)
         {
             _logger = logger;
+            this.eventsService = eventsService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var latestEvents = this.eventsService.GetEventsOnAllPage().OrderByDescending(x => x.EventDate).Take(3)
+                .ToList();
+            return View(latestEvents);
         }
 
         public IActionResult Privacy()

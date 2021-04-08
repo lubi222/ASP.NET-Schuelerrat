@@ -47,7 +47,6 @@
                         Path = i.Path,
                         Id = i.Id
                     }).ToList(),
-
                     EventDate = x.EventDate.ToString("dd/MM/yyyy")
                 }).FirstOrDefault();
         }
@@ -61,6 +60,8 @@
                     Id = x.Id,
                     Title = x.Title,
                     Day = x.EventDate.Day,
+                    EventDate = x.EventDate,
+                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault() : this.dbContext.Images.FirstOrDefault(i => i.Id == 5),
                     Month = x.EventDate.Month.ToString(CultureInfo.CreateSpecificCulture("bg-BG").DateTimeFormat.AbbreviatedMonthNames[x.EventDate.Month - 1]),
                     ShortDescription = x.Paragraphs.Any() != true ? null : string.Join(" ", x.Paragraphs.FirstOrDefault().Text.Split().Take(15)) + "..."
                 }).ToList();

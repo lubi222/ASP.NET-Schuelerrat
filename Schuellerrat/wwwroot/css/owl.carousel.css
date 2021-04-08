@@ -77,17 +77,6 @@
   /* fix for flashing background */
   -webkit-transform: translate3d(0px, 0px, 0px);
 }
-.owl-carousel .owl-controls .owl-nav .owl-prev,
-.owl-carousel .owl-controls .owl-nav .owl-next,
-.owl-carousel .owl-controls .owl-dot {
-  cursor: pointer;
-  cursor: hand;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 
 
 
@@ -239,68 +228,3 @@
 }
 
 /* Styling Next and Prev buttons */
-
-.owl-theme .owl-controls .owl-nav div {
-    text-align: center;
-    display: inline-block;
-    outline: 0;
-    width: 40px;
-    text-align: center;
-    line-height: 40px;
-    height: 40px;    
-    color: #000000;
-    top: 50%;
-    font-size: 0;
-    margin-top: -20px;  
-    border: 1px solid #ccc;
-    border-radius: 2px;  
-      -webkit-transition: all 0.3s ease-in-out;
-       -moz-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-         -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-}
-
-.owl-theme .owl-controls .owl-nav div:hover {
-    background-color: #ffaa30;
-    border-color: #ffaa30;
-}
-
-.owl-theme .owl-controls .owl-nav div:hover:before {
-    color: #fff;
-}
-
-.owl-theme .owl-controls .owl-nav div.owl-prev {
-    position: absolute;
-    left: 0;   
-}
-
-.owl-theme .owl-controls .owl-nav div.owl-prev:before,
-.owl-theme .owl-controls .owl-nav div.owl-next:before {
-    font-family: FontAwesome;    
-    font-size: 14px;
-    color: #ccc;
-    -webkit-transition: all 0.3s ease-in-out;
-       -moz-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-         -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-}  
-
-.owl-theme .owl-controls .owl-nav div.owl-prev:before {
-   content: "\f104"; 
-}
-
-.owl-theme .owl-controls .owl-nav div.owl-prev:hover:before,
-.owl-theme .owl-controls .owl-nav div.owl-next:hover:before {    
-    color: #fff;
-}
-
-.owl-theme .owl-controls .owl-nav div.owl-next {
-  position: absolute;
-  right: 0;
-}
-
-.owl-theme .owl-controls .owl-nav div.owl-next:before {    
-    content: "\f105";    
-}  

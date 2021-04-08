@@ -106,3 +106,7 @@ ul.curriculum li ul.section-content li.course-lesson .lesson-preview,.go-top.sho
 .flat-row.testimonial .testimonial-content:before {
     background: url(../../images/index/testimonial-icon2.png) no-repeat;
 }
+
+.owl-prev, .owl-next {
+    display: none !important;
+}
