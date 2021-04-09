@@ -6,18 +6,18 @@
 <body>
     <main>
         <section class="main-content blog-posts blog-grid have-sidebar">
-            <div class="container">
+            <div class="container" style="">
                 <div class="blog-title">
-                    <h1 class="bold">News & Blog</h1>
+                    <h1 class="bold">Нашите събития</h1>
                 </div>
-            <div class="post-content">
-            <div class="post-wrap clearfix">
+                <div class=""style="width: 100%">
+                <div class="post-wrap clearfix row" style="width: 100%">
                  @foreach (var singleEvent in Model)
                  {
-                      <article style="border: 1px solid red; height: 400px" class="post flat-hover-zoom">
+                      <article style="height: 500px;" class="post flat-hover-zoom col-md-4 mb-5" >
                           <div class="featured-post">
-                              <div class="entry-image">
-                                  <img src="/images/blog/Blog-01.jpg" alt="image">
+                              <div class="entry-image" style="height: 350px; background: url('@singleEvent.Cover.Path'); background-size: cover; background-position: center">
+                                  @*<img style="height: 250px" src="@singleEvent.Cover.Path" alt="image">*@
                               </div>
                           </div>
                           <div class="date-post">
@@ -29,29 +29,18 @@
                               <h2 class="title-post">
                                   <a asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id">@singleEvent.Title</a>
                               </h2>
-                      
-                              <div class="entry-content">
+                              <div class="">
                                   <p>@singleEvent.ShortDescription</p>
                               </div><!-- /entry-post -->
                           </div>
                       </article><!-- /post -->
                  }
-            </div><!-- /post-wrap -->
-                <!--<div class="blog-pagination">
+            </div>
+                <div class="col-md-12 mt-3">
+                    <nav class="blog-pagination" aria-label="Page navigation">
                         <ul class="flat-pagination">
-                            <li><a class="active" href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="next">
-                                <a href="#">Next</a>
-                            </li>
-                        </ul>--><!-- /.flat-pagination -->
-                <!--</div>-->
-                <div class="col-md-12">
-                    <div class="blog-pagination " aria-label="Page navigation">
-                        <ul class="flat-pagination">
-                            <li class="@if (!(currentPage - 1 > 0)) { <text>disabled</text> }">
-                                <a class="" asp-action="All" asp-route-id="@(currentPage-1)">«</a>
+                            <li class="page-item @if (!(currentPage - 1 > 0)) { <text>disabled</text> }">
+                                <a class="page-link" asp-action="All" asp-route-id="@(currentPage-1)">«</a>
                             </li>
                             @for (int i = currentPage - 4; i < currentPage; i++)
                             {
@@ -68,11 +57,11 @@
                                     <li class=""><a class="" asp-action="All" asp-route-id="@i">@i</a></li>
                                 }
                             }
-                            <li class="next  @if (!(currentPage + 1 <= pageCount+1)) { <text>disabled</text> }">
-                                <a class="" asp-controller="Events" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
+                            <li class="page-item @if (!(currentPage + 1 < pageCount)) { <text>disabled</text> }">
+                                <a class="page-link" asp-controller="Events" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
                             </li>
                         </ul>
-                    </div>
+                    </nav>
                 </div>
                 </div>
             </div><!-- /row -->
