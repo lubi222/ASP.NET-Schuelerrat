@@ -20,5 +20,9 @@
         public Image Cover { get; set; }
         
         public string ShortDescription { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int PageCount { get; set; }
     }
 }

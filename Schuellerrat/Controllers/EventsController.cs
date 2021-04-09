@@ -11,9 +11,9 @@
         {
             this.eventsService = eventsService;
         }
-        public IActionResult All()
+        public IActionResult All(int id)
         {
-            var events = this.eventsService.GetEventsOnAllPage();
+            var events = this.eventsService.GetEventsOnAllPage(id);
             return this.View(events);
         }
 

@@ -17,6 +17,7 @@
         private readonly ApplicationDbContext dbContext;
         private readonly ICloudinaryService cloudinaryService;
         private readonly Cloudinary cloudinary;
+        private const int eventsPerPage = 6;
 
         public EventsService(ApplicationDbContext dbContext, ICloudinaryService cloudinaryService, Cloudinary cloudinary)
         {
@@ -51,7 +52,7 @@
                 }).FirstOrDefault();
         }
 
-        public ICollection<AllEventsViewModel> GetEventsOnAllPage()
+        public ICollection<AllEventsViewModel> GetEventsOnAllPage(int currentPage)
         {
             return this.dbContext
                 .Events
@@ -61,10 +62,13 @@
                     Title = x.Title,
                     Day = x.EventDate.Day,
                     EventDate = x.EventDate,
-                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault() : this.dbContext.Images.FirstOrDefault(i => i.Id == 5),
+                    CurrentPage = currentPage,
+                    PageCount = (int)this.GetMaxPages(),
+                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault() : this.dbContext.Images.FirstOrDefault(i => i.Id == 1),
                     Month = x.EventDate.Month.ToString(CultureInfo.CreateSpecificCulture("bg-BG").DateTimeFormat.AbbreviatedMonthNames[x.EventDate.Month - 1]),
-                    ShortDescription = x.Paragraphs.Any() != true ? null : string.Join(" ", x.Paragraphs.FirstOrDefault().Text.Split().Take(15)) + "..."
-                }).ToList();
+                    //ShortDescription = x.Paragraphs.Any() != true ? null : string.Join(" ", x.Paragraphs.FirstOrDefault().Text.Split().Take(15)) + "..."
+                    ShortDescription = x.Paragraphs.Any() != true ? null : GetShortDescription(x.Paragraphs.FirstOrDefault().Text),
+                }).Skip((currentPage - 1) * eventsPerPage).Take(eventsPerPage).ToList();
         }
 
         public ICollection<AllContentViewModel> GetEventsOnAdminPage()
@@ -142,6 +146,19 @@
             this.dbContext.Events.Remove(eventToRemove);
 
             await this.dbContext.SaveChangesAsync();
+        }
+
+        private decimal GetMaxPages()
+        {
+            decimal maxPages = this.dbContext.Events.Count() / eventsPerPage;
+            return Math.Ceiling(maxPages);
+        }
+
+        private static string GetShortDescription(string desc)
+        {
+            string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 20); // TODO: change to something higher when deploying
+            string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 50 : tempDesc.LastIndexOf(' '));
+            return subTempDesc;
         }
     }
 }

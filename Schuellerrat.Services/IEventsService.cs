@@ -9,7 +9,7 @@
     {
         public SingleEventViewModel GetSingleEvent(int id);
 
-        public ICollection<AllEventsViewModel> GetEventsOnAllPage();
+        public ICollection<AllEventsViewModel> GetEventsOnAllPage(int currentPage);
 
         public ICollection<AllContentViewModel> GetEventsOnAdminPage();
 

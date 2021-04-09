@@ -1,4 +1,8 @@
 ﻿@model ICollection<Schuellerrat.ViewModels.AllEventsViewModel>
+@{
+    var currentPage = @Model.ToList()[0].CurrentPage;
+    var pageCount = @Model.ToList()[0].PageCount;
+}
 <body>
     <main>
         <section class="main-content blog-posts blog-grid have-sidebar">
@@ -8,34 +12,32 @@
                 </div>
             <div class="post-content">
             <div class="post-wrap clearfix">
-            @foreach (var singleEvent in Model)
-            {
-                <a asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id">
-                    <article class="post flat-hover-zoom">
-                        <div class="featured-post">
-                            <div class="entry-image">
-                                <img src="/images/blog/Blog-01.jpg" alt="image">
-                            </div>
-                        </div>
-                        <div class="date-post">
-                            <span class="numb">@singleEvent.Day</span>
-                            <span>@singleEvent.Month</span>
-                        </div>
-
-                        <div class="content-post">
-                            <h2 class="title-post">
-                                <a href="blog-single.html">@singleEvent.Title</a>
-                            </h2>
-
-                            <div class="entry-content">
-                                <p>@singleEvent.ShortDescription</p>
-                            </div><!-- /entry-post -->
-                        </div>
-                    </article><!-- /post -->
-                </a>
-            }
+                 @foreach (var singleEvent in Model)
+                 {
+                      <article style="border: 1px solid red; height: 400px" class="post flat-hover-zoom">
+                          <div class="featured-post">
+                              <div class="entry-image">
+                                  <img src="/images/blog/Blog-01.jpg" alt="image">
+                              </div>
+                          </div>
+                          <div class="date-post">
+                              <span class="numb">@singleEvent.Day</span>
+                              <span>@singleEvent.Month</span>
+                          </div>
+                      
+                          <div class="content-post">
+                              <h2 class="title-post">
+                                  <a asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id">@singleEvent.Title</a>
+                              </h2>
+                      
+                              <div class="entry-content">
+                                  <p>@singleEvent.ShortDescription</p>
+                              </div><!-- /entry-post -->
+                          </div>
+                      </article><!-- /post -->
+                 }
             </div><!-- /post-wrap -->
-                <div class="blog-pagination">
+                <!--<div class="blog-pagination">
                         <ul class="flat-pagination">
                             <li><a class="active" href="#">1</a></li>
                             <li><a href="#">2</a></li>
@@ -43,8 +45,35 @@
                             <li class="next">
                                 <a href="#">Next</a>
                             </li>
-                        </ul><!-- /.flat-pagination -->
+                        </ul>--><!-- /.flat-pagination -->
+                <!--</div>-->
+                <div class="col-md-12">
+                    <div class="blog-pagination " aria-label="Page navigation">
+                        <ul class="flat-pagination">
+                            <li class="@if (!(currentPage - 1 > 0)) { <text>disabled</text> }">
+                                <a class="" asp-action="All" asp-route-id="@(currentPage-1)">«</a>
+                            </li>
+                            @for (int i = currentPage - 4; i < currentPage; i++)
+                            {
+                                if (i > 0)
+                                {
+                                    <li class=""><a class="" asp-action="All" asp-route-id="@i">@i</a></li>
+                                }
+                            }
+                            <li class="active" style="padding: 0"><a class="" href="#">@currentPage</a></li>
+                            @for (int i = currentPage + 1; i <= currentPage + 4; i++)
+                            {
+                                if (i <= pageCount+1)
+                                {
+                                    <li class=""><a class="" asp-action="All" asp-route-id="@i">@i</a></li>
+                                }
+                            }
+                            <li class="next  @if (!(currentPage + 1 <= pageCount+1)) { <text>disabled</text> }">
+                                <a class="" asp-controller="Events" asp-action="All" asp-route-id="@(currentPage+1)">»</a>
+                            </li>
+                        </ul>
                     </div>
+                </div>
                 </div>
             </div><!-- /row -->
         </section><!-- /main-content -->

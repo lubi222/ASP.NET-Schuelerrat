@@ -24,7 +24,7 @@ namespace Schuellerrat.Controllers
 
         public IActionResult Index()
         {
-            var latestEvents = this.eventsService.GetEventsOnAllPage().OrderByDescending(x => x.EventDate).Take(3)
+            var latestEvents = this.eventsService.GetEventsOnAllPage(1).OrderByDescending(x => x.EventDate).Take(3)
                 .ToList();
             return View(latestEvents);
         }
