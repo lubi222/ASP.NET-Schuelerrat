@@ -1,9 +1,13 @@
-﻿@model Schuellerrat.ViewModels.SingleEventViewModel
+﻿@using System.Globalization
+@model Schuellerrat.ViewModels.SingleEventViewModel
 @{
     var paragraphTexts = Model.ParagraphTexts;
     var paragraphTitles = Model.ParagraphTitles;
     var images = Model.Images;
+    var date = DateTime.ParseExact(Model.EventDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
 }
+
 <body class="header-sticky">
     <main>
         <div class="page-title parallax parallax4">
@@ -35,16 +39,15 @@
                                 <div class="entry-border">
                                     <div class="main-post">
                                         <div class="wrap-img">
-                                            <img src="/images/blog/4singlev1.png" alt="images">
                                             <div class="entry-meta">
-                                                <span class="date"><a href="#">20 March, 2016</a></span>
+                                                <span class="date capitalized-date">@date.ToString("D", CultureInfo.CreateSpecificCulture("bg-BG"))</span>
                                             </div>
                                         </div>
                                         <div class="feature-post">
-                                            <img src="/images/blog/bs.jpg" alt="image">
+                                            <img style="width: 100%;" src="@Model.Images.ToList()[0].Path" alt="image">
                                         </div><!-- /.feature-post -->
                                         <div class="entry-content">
-                                            @for(int i = 0; i < paragraphTexts.Count; i++)
+                                            @for (int i = 0; i < paragraphTexts.Count; i++)
                                             {
                                                 <h4>@paragraphTitles.ToList()[i]</h4>
                                                 <p>
@@ -59,6 +62,8 @@
 
                         </div><!-- /blog-title-single -->
                     </div><!-- /col-md-8 -->
+
+
 
                     <div class="sidebar">
                         <div class="widget widget-popular-news">
@@ -94,6 +99,35 @@
                             </ul><!-- /popular-news clearfix -->
                         </div><!-- /widget widget-popular-news -->
                     </div><!-- /sidebar -->
+                    <section id="carousel-section" style="border: 1px solid yellow; width: 80%">
+                        <h2 class="descriptions"> Screenshots</h2>
+                        <div class="carousel slide" id="main-carousel" data-ride="carousel" style="border: 1px solid red; height: 500px">
+                            <ol class="carousel-indicators">
+                                <li data-target="#main-carousel" data-slide-to="0" class="active"></li>
+                                @for (int i = 1; i < Model.Images.Count; i++)
+                                {
+                                    <li data-target="#main-carousel" data-slide-to="@i"></li>
+                                }
+                            </ol>
+                            <div class="carousel-inner" style="height: 100%">
+                                @foreach (var image in Model.Images)
+                                {
+
+                                    <div class="carousel-item @(image == Model.Images.First() ? "active" : "")" style="border: 1px solid blue; background: url('@image.Path') no-repeat; background-size: cover; background-position: center; height: 100%">
+                                        @*<img style="height: 100%" src="@image.Path">*@
+                                    </div>
+                                }
+                            </div>
+                            <a href="#main-carousel" class="carousel-control-prev" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                                <span class="sr-only" aria-hidden="true">Prev</span>
+                            </a>
+                            <a href="#main-carousel" class="carousel-control-next" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                                <span class="sr-only" aria-hidden="true">Next</span>
+                            </a>
+                        </div>
+                    </section>
                 </div><!-- /row -->
             </div><!-- /container -->
         </section><!-- /main-content -->

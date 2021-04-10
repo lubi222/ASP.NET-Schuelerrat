@@ -155,8 +155,8 @@
 
         private static string GetShortDescription(string desc)
         {
-            string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 20); // TODO: change to something higher when deploying
-            string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 50 : tempDesc.LastIndexOf(' '));
+            string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 50); // TODO: change to something higher when deploying
+            string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 40 : tempDesc.LastIndexOf(' '));
             return subTempDesc;
         }
     }
