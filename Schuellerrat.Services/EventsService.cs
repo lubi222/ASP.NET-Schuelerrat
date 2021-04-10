@@ -64,9 +64,8 @@
                     EventDate = x.EventDate,
                     CurrentPage = currentPage,
                     PageCount = (int)this.GetMaxPages(),
-                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault() : this.dbContext.Images.FirstOrDefault(i => i.Id == 1),
+                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault().Path : this.dbContext.Images.FirstOrDefault(i => i.Id == 1).Path,
                     Month = x.EventDate.Month.ToString(CultureInfo.CreateSpecificCulture("bg-BG").DateTimeFormat.AbbreviatedMonthNames[x.EventDate.Month - 1]),
-                    //ShortDescription = x.Paragraphs.Any() != true ? null : string.Join(" ", x.Paragraphs.FirstOrDefault().Text.Split().Take(15)) + "..."
                     ShortDescription = x.Paragraphs.Any() != true ? null : GetShortDescription(x.Paragraphs.FirstOrDefault().Text),
                 }).Skip((currentPage - 1) * eventsPerPage).Take(eventsPerPage).ToList();
         }

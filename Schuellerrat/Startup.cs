@@ -2,6 +2,7 @@ using CloudinaryDotNet;
 
 namespace Schuellerrat
 {
+    using System;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -11,6 +12,7 @@ namespace Schuellerrat
     using Microsoft.Extensions.Hosting;
     using Data;
     using Data.Seeders;
+    using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
     using Services;
     using Services.EmailService;
     using Services.EmailService.Email;
@@ -29,7 +31,8 @@ namespace Schuellerrat
         {
             services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(this.Configuration.GetConnectionString("DefaultConnection"),
+                    new MySqlServerVersion(new Version(8, 0, 22)), x => x.EnableRetryOnFailure()));
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)

@@ -17,7 +17,7 @@
 
         public DateTime EventDate { get; set; }
 
-        public Image Cover { get; set; }
+        public string Cover { get; set; }
         
         public string ShortDescription { get; set; }
 
