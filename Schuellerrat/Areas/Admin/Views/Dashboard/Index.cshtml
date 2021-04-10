@@ -14,7 +14,7 @@
             </button>
         </div>
     }
-<h2>Статии и блогове  <a asp-controller="Dashboard" asp-action="AddArticle"><button class="btn btn-success btn-lg">+</button></a></h2>
+    <h2>Статии и блогове  <a asp-controller="Dashboard" asp-action="AddArticle"><button class="btn btn-success btn-lg">+</button></a></h2>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
@@ -36,28 +36,23 @@
                         <a asp-area="Admin" asp-controller="Dashboard" asp-action="EditArticle" asp-route-id="@article.Id">
                             <button class="btn btn-warning">Промяна</button>
                         </a>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Премахване</button>
-                        <div id="myModal" class="modal" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Потвърдете действието</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Потвърждавате ли изтриването?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteArticle" asp-route-id="@article.Id">
-                                            <button class="btn btn-danger">Премахване</button>
-                                        </a>
-                                        <button type="button" id="myInput" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
-                                    </div>
-                                </div>
+
+                        @* DELETE BUTTON AND MODAL *@
+
+                        <a data-toggle="modal" data-id="@article.Id" title="Add this item" class="open-AddCrabDialog" href="#addCrabDialog"><button class="btn btn-danger">Изтриване</button></a>
+
+
+                        <div class="modal hide" id="addCrabDialog">
+
+                            <div class="modal-body">
+                                <h3>Потвърдете изтриването</h3>
+                                <button data-dismiss="modal" class="btn btn-primary">Отказ</button>
+                                <a id="crabId">
+                                    <button class="btn btn-danger">Изтриване</button>
+                                </a>
                             </div>
                         </div>
+
                     </td>
                 </tr>
             }
@@ -68,57 +63,68 @@
     <h2>Събития <a asp-controller="Dashboard" asp-action="AddEvent"><button class="btn btn-success btn-lg">+</button></a></h2>
     <table class="table table-striped table-hover">
         <thead>
-        <tr>
-            <th scope="col">Заглавие</th>
-            <th scope="col">Създадено на</th>
-            <th scope="col">Администрация</th>
-        </tr>
+            <tr>
+                <th scope="col">Заглавие</th>
+                <th scope="col">Създадено на</th>
+                <th scope="col">Администрация</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var singleEvent in events)
-        {
-            <tr>
-                <td>@singleEvent.Title</td>
-                <td>@singleEvent.CreatedOn</td>
-                <td>
-                    <a asp-area="" asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id">
-                        <button class="btn btn-primary">Страница</button>
-                    </a>
-                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="EditEvent" asp-route-id="@singleEvent.Id">
-                        <button class="btn btn-warning">Промяна</button>
-                    </a>
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#myModal">Премахване</button>
-                    <div id="myModal" class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Потвърдете действието</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Потвърждавате ли изтриването?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="DeleteEvent" asp-route-id="@singleEvent.Id">
-                                        <button class="btn btn-danger">Премахване</button>
-                                    </a>
-                                    <button type="button" id="myInput" class="btn btn-secondary" data-dismiss="modal">Отказ</button>
-                                </div>
+
+            @foreach (var singleEvent in events)
+            {
+                <tr>
+                    <td>@singleEvent.Title</td>
+                    <td>@singleEvent.CreatedOn</td>
+                    <td>
+                        <a asp-area="" asp-controller="Events" asp-action="Details" asp-route-id="@singleEvent.Id">
+                            <button class="btn btn-primary">Страница</button>
+                        </a>
+                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="EditEvent" asp-route-id="@singleEvent.Id">
+                            <button class="btn btn-warning">Промяна</button>
+                        </a>
+
+                        @* DELETE BUTTON AND MODAL *@
+
+                        <a data-toggle="modal" data-id="@singleEvent.Id" title="Add this item" class="open-AddBookDialog" href="#addBookDialog"><button class="btn btn-danger">Изтриване</button></a>
+
+                        <div class="modal hide" id="addBookDialog">
+
+                            <div class="modal-body">
+                                <h3>Потвърдете изтриването</h3>
+                                <button data-dismiss="modal" class="btn btn-primary">Отказ</button>
+                                <a id="bookId">
+                                    <button class="btn btn-danger">Изтриване</button>
+                                </a>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        }
+
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 
 @section Scripts{
     <script>
-        $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').trigger('focus') });
+        $('#myModal').on('shown.bs.modal',
+            function() {
+                $('#myInput').trigger('focus')
+            });
+
+        
+        $(document).on("click", ".open-AddBookDialog", function () {
+            var myBookId = $(this).data('id');
+            $(".modal-body #bookId").attr("href", "/Admin/Dashboard/DeleteEvent/" + myBookId.toString() );
+
+        });
+
+        $(document).on("click", ".open-AddCrabDialog", function () {
+            var myCrabId = $(this).data('id');
+            $(".modal-body #crabId").attr("href", "/Admin/Dashboard/DeleteArticle/" + myCrabId.toString());
+
+        });
+
     </script>
 }
