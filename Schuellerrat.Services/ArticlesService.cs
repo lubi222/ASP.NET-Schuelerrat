@@ -144,7 +144,7 @@
         }
         public async Task<ArticleViewModel> GetSchoolInfo()
         {
-            return await this.dbContext.Articles.Where(x => x.Id == 4).Select(x => new ArticleViewModel
+            return await this.dbContext.Articles.Where(x => x.Id == 5).Select(x => new ArticleViewModel
             {
                 Title = x.Title,
                 Images = x.Images.Select(i => new ImageViewModel
