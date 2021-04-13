@@ -114,10 +114,13 @@
 
             oldEvent.EventDate = input.EventDate;
 
-            var images = await this.cloudinaryService.UploadAsync(input.Images, basePath);
-            foreach (var img in images)
+            if (input.Images.Any())
             {
-                oldEvent.Images.Add(img);
+                var images = await this.cloudinaryService.UploadAsync(input.Images, basePath);
+                foreach (var img in images)
+                {
+                    oldEvent.Images.Add(img);
+                }
             }
 
             foreach (var paragraph in input.Paragraphs)
@@ -161,9 +164,9 @@
 
         private static string GetShortDescription(string desc)
         {
-            string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 50); // TODO: change to something higher when deploying
-            string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 40 : tempDesc.LastIndexOf(' '));
-            return subTempDesc;
+            //string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 1); // TODO: change to something higher when deploying
+            //string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 2 : tempDesc.LastIndexOf(' '));
+            return "testDescr";
         }
     }
 }

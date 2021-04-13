@@ -62,6 +62,25 @@ namespace Schuellerrat.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Clubs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Leader = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    MaxClass = table.Column<int>(type: "int", nullable: true),
+                    MinClass = table.Column<int>(type: "int", nullable: true),
+                    Time = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    ShortDescription = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
+                    Title = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clubs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
@@ -89,30 +108,6 @@ namespace Schuellerrat.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Links", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clubs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Title = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
-                    Leader = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
-                    MaxClass = table.Column<int>(type: "int", nullable: true),
-                    MinClass = table.Column<int>(type: "int", nullable: true),
-                    Time = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: true),
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clubs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Clubs_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -229,7 +224,8 @@ namespace Schuellerrat.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Path = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: true),
-                    EventId = table.Column<int>(type: "int", nullable: true)
+                    EventId = table.Column<int>(type: "int", nullable: true),
+                    ClubId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,6 +236,12 @@ namespace Schuellerrat.Data.Migrations
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Images_Clubs_ClubId",
+                        column: x => x.ClubId,
+                        principalTable: "Clubs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Images_Events_EventId",
                         column: x => x.EventId,
@@ -257,7 +259,8 @@ namespace Schuellerrat.Data.Migrations
                     Title = table.Column<string>(type: "varchar(100) CHARACTER SET utf8mb4", maxLength: 100, nullable: true),
                     Text = table.Column<string>(type: "longtext CHARACTER SET utf8mb4", nullable: false),
                     ArticleId = table.Column<int>(type: "int", nullable: true),
-                    EventId = table.Column<int>(type: "int", nullable: true)
+                    EventId = table.Column<int>(type: "int", nullable: true),
+                    ClubId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -268,6 +271,12 @@ namespace Schuellerrat.Data.Migrations
                         principalTable: "Articles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Paragraphs_Clubs_ClubId",
+                        column: x => x.ClubId,
+                        principalTable: "Clubs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Paragraphs_Events_EventId",
                         column: x => x.EventId,
@@ -314,14 +323,14 @@ namespace Schuellerrat.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Clubs_ArticleId",
-                table: "Clubs",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Images_ArticleId",
                 table: "Images",
                 column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_ClubId",
+                table: "Images",
+                column: "ClubId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Images_EventId",
@@ -332,6 +341,11 @@ namespace Schuellerrat.Data.Migrations
                 name: "IX_Paragraphs_ArticleId",
                 table: "Paragraphs",
                 column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Paragraphs_ClubId",
+                table: "Paragraphs",
+                column: "ClubId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Paragraphs_EventId",
@@ -357,9 +371,6 @@ namespace Schuellerrat.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Clubs");
-
-            migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
@@ -376,6 +387,9 @@ namespace Schuellerrat.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Articles");
+
+            migrationBuilder.DropTable(
+                name: "Clubs");
 
             migrationBuilder.DropTable(
                 name: "Events");

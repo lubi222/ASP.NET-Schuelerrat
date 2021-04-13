@@ -9,12 +9,16 @@
     {
         public ICollection<AllContentViewModel> GetArticlesOnAdminPage();
 
-        public Task AddArticle(AddClubInputModel input, string basePath);
+        public Task AddArticle(AddArticleInputModel input, string basePath);
 
         public Task EditArticle(EditArticleInputModel input, string basePath);
 
         public Task DeleteArticleAsync(int id);
 
         public SingleArticleViewModel GetSingleArticle(int id);
+
+        public Task<ArticleViewModel> GetAboutUsArticle();
+
+        public Task<ArticleViewModel> GetSchoolInfo();
     }
 }

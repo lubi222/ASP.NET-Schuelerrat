@@ -9,8 +9,8 @@ using Schuellerrat.Data;
 namespace Schuellerrat.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210411194612_FixClubModel")]
-    partial class FixClubModel
+    [Migration("20210413124313_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -235,6 +235,9 @@ namespace Schuellerrat.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Leader")
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -290,6 +293,9 @@ namespace Schuellerrat.Data.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ClubId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
@@ -300,6 +306,8 @@ namespace Schuellerrat.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("ClubId");
 
                     b.HasIndex("EventId");
 
@@ -337,6 +345,9 @@ namespace Schuellerrat.Data.Migrations
                     b.Property<int?>("ArticleId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ClubId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EventId")
                         .HasColumnType("int");
 
@@ -351,6 +362,8 @@ namespace Schuellerrat.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
+
+                    b.HasIndex("ClubId");
 
                     b.HasIndex("EventId");
 
@@ -415,12 +428,18 @@ namespace Schuellerrat.Data.Migrations
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("Schuellerrat.Models.Club", "Club")
+                        .WithMany("Images")
+                        .HasForeignKey("ClubId");
+
                     b.HasOne("Schuellerrat.Models.Event", "Event")
                         .WithMany("Images")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Article");
+
+                    b.Navigation("Club");
 
                     b.Navigation("Event");
                 });
@@ -431,6 +450,10 @@ namespace Schuellerrat.Data.Migrations
                         .WithMany("Paragraphs")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Schuellerrat.Models.Club", null)
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("ClubId");
 
                     b.HasOne("Schuellerrat.Models.Event", "Event")
                         .WithMany("Paragraphs")
@@ -443,6 +466,13 @@ namespace Schuellerrat.Data.Migrations
                 });
 
             modelBuilder.Entity("Schuellerrat.Models.Article", b =>
+                {
+                    b.Navigation("Images");
+
+                    b.Navigation("Paragraphs");
+                });
+
+            modelBuilder.Entity("Schuellerrat.Models.Club", b =>
                 {
                     b.Navigation("Images");
 

@@ -37,15 +37,18 @@
                 .ToList();
         }
 
-        public async Task AddArticle(AddClubInputModel input, string basePath)
+        public async Task AddArticle(AddArticleInputModel input, string basePath)
         {
-            await this.dbContext.Clubs.AddAsync(new Club()
+            await this.dbContext.Articles.AddAsync(new Article()
             {
                 Title = input.Title,
-                ShortDescription = input.Description,
-                Leader = input.Leader,
-                MaxClass = input.MaxClass,
-                MinClass = input.MinClass,
+                Paragraphs = input.Paragraphs?.Select(p => new Paragraph
+                {
+                    Title = p.Title,
+                    Text = p.Content,
+                }).ToList(),
+                CreatedOn = DateTime.Now,
+                Images = input.Images != null ? await this.cloudinaryService.UploadAsync(input.Images, basePath) : null
             });
             await this.dbContext.SaveChangesAsync();
         }
@@ -56,10 +59,14 @@
             var oldArticleParagraphs = this.dbContext.Paragraphs.Where(p => p.ArticleId == oldArticle.Id);
             oldArticle.Paragraphs = oldArticleParagraphs.ToList();
 
-            var images = await this.cloudinaryService.UploadAsync(input.Images, basePath);
-            foreach (var img in images)
+            
+            if (input.Images.Any())
             {
-                oldArticle.Images.Add(img);
+                var images = await this.cloudinaryService.UploadAsync(input.Images, basePath);
+                foreach (var img in images)
+                {
+                    oldArticle.Images.Add(img);
+                }
             }
 
             foreach (var paragraph in input.Paragraphs)
@@ -118,5 +125,39 @@
                     }).ToList(),
                 }).FirstOrDefault();
         }
+
+        public async Task<ArticleViewModel> GetAboutUsArticle()
+        {
+            return await this.dbContext.Articles.Where(x => x.Id == 4).Select(x => new ArticleViewModel
+            {
+                Title = x.Title,
+                Images = x.Images.Select(i => new ImageViewModel
+                {
+                    Path = i.Path,
+                }).ToList(),
+                Paragraphs = x.Paragraphs.Select(i => new ParagraphViewModel()
+                {
+                    Content = i.Text,
+                    Title = i.Title
+                }).ToList(),
+            }).FirstOrDefaultAsync();
+        }
+        public async Task<ArticleViewModel> GetSchoolInfo()
+        {
+            return await this.dbContext.Articles.Where(x => x.Id == 4).Select(x => new ArticleViewModel
+            {
+                Title = x.Title,
+                Images = x.Images.Select(i => new ImageViewModel
+                {
+                    Path = i.Path,
+                }).ToList(),
+                Paragraphs = x.Paragraphs.Select(i => new ParagraphViewModel()
+                {
+                    Content = i.Text,
+                    Title = i.Title
+                }).ToList(),
+            }).FirstOrDefaultAsync();
+        }
+
     }
 }

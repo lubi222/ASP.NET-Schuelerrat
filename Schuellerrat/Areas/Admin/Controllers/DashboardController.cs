@@ -19,26 +19,30 @@
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IEventsService eventsService;
         private readonly IArticlesService articlesService;
+        private readonly IClubsService clubsService;
 
         public DashboardController(
             IDashboardService dashboardService, 
             ICloudinaryService cloudinaryService,
             IWebHostEnvironment webHostEnvironment,
             IEventsService eventsService,
-            IArticlesService articlesService)
+            IArticlesService articlesService,
+            IClubsService clubsService)
         {
             this.dashboardService = dashboardService;
             this.cloudinaryService = cloudinaryService;
             this.webHostEnvironment = webHostEnvironment;
             this.eventsService = eventsService;
             this.articlesService = articlesService;
+            this.clubsService = clubsService;
         }
 
         public IActionResult Index()
         {
             var allEvents = this.eventsService.GetEventsOnAdminPage();
             var allArticles = this.articlesService.GetArticlesOnAdminPage();
-            return this.View(new List<List<AllContentViewModel>>(){allEvents.ToList(), allArticles.ToList()});
+            var allClubs = this.clubsService.GetClubsOnAllPage();
+            return this.View(new List<List<AllContentViewModel>>(){allEvents.ToList(), allArticles.ToList(), allClubs.ToList()});
         }
 
         [Authorize(Roles = "admin")]
@@ -129,7 +133,7 @@
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> AddArticle(AddClubInputModel input)
+        public async Task<IActionResult> AddArticle(AddArticleInputModel input)
         {
             if (!ModelState.IsValid)
             {
@@ -189,9 +193,9 @@
             {
                 filled.Add(new ParagraphInputModel
                 {
-                    Id = oldEvent.ParagraphIds.ToList()[0],
-                    Title = oldEvent.ParagraphTitles.ToList()[0],
-                    Content = oldEvent.ParagraphTexts.ToList()[0],
+                    Id = oldEvent.ParagraphIds.ToList()[i],
+                    Title = oldEvent.ParagraphTitles.ToList()[i],
+                    Content = oldEvent.ParagraphTexts.ToList()[i],
                 });
             }
             return filled;
@@ -202,6 +206,71 @@
         {
             await this.articlesService.DeleteArticleAsync(id);
             this.TempData["message"] = "Статията е изтрито успешно.";
+            return this.RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult AddClub()
+        {
+            return this.View();
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<IActionResult> AddClub(AddClubInputModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(input);
+
+            }
+            await this.clubsService.AddClubAsync(input, $"{this.webHostEnvironment.WebRootPath}/img/");
+            this.TempData["message"] = "Клубът е създаден успешно.";
+
+            return this.RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        public IActionResult EditClub(int id, int bonusId)
+        {
+            var oldClub = this.clubsService.GetById(id);
+
+            var newEvent = new EditClubInputModel
+            {
+                Id = oldClub.Id,
+                Title = oldClub.Title,
+                Leader = oldClub.Leader,
+                MaxClass = oldClub.MaxClass,
+                MinClass = oldClub.MinClass,
+                Time = oldClub.Time,
+                Description = oldClub.ShortDescription
+            };
+            return this.View(newEvent);
+
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost]
+        public async Task<IActionResult> EditClub(EditClubInputModel input, int clubId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            await this.clubsService.EditClubAsync(input, $"{this.webHostEnvironment.WebRootPath}/img/");
+
+            this.TempData["message"] = "Клубът е променен успешно.";
+            return this.RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteClub(int id)
+        {
+            await this.clubsService.DeleteClubAsync(id);
+            this.TempData["message"] = "Клубът е изтрит успешно.";
             return this.RedirectToAction("Index");
         }
     }

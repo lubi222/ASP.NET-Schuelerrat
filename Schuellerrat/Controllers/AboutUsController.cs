@@ -1,16 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Schuellerrat.Controllers
+﻿namespace Schuellerrat.Controllers
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Services;
+
     public class AboutUsController : Controller
     {
-        public IActionResult Index()
+        private readonly IArticlesService articlesService;
+
+        public AboutUsController(IArticlesService articlesService)
         {
-            return this.View();
+            this.articlesService = articlesService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var aboutUsArticle = await this.articlesService.GetAboutUsArticle();
+            return this.View(aboutUsArticle);
         }
     }
 }

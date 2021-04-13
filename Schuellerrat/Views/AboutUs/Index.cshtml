@@ -1,5 +1,9 @@
-﻿@{
+﻿@model Schuellerrat.ViewModels.ArticleViewModel
+@{
     ViewData["Title"] = "За нас";
+    var events = Model.Paragraphs.ToList()[0].Content.Split(",").ToList();
+    var paragraphs = Model.Paragraphs.Skip(1).Select(x => x.Content).ToList();
+
 }
 <body class="header-sticky">
     <main>
@@ -31,18 +35,21 @@
                                 <div class="content-inner">
                                     <div class="text-tab">
                                         <div class="flat-title">
-                                            <h1>Ученически съвет 91.НЕГ<span></span></h1>
+                                            <h1>@Model.Title<span></span></h1>
                                         </div><!-- /.flat-title -->
-                                        <p>Малко след създаването на Немската гимназия през 1960 година се поставя началото на една нова училищна институция, а именно нашият ученически съвет. Малка общност, която с времето се разраства и придобива авторитет.</p>
-                                        <p>Ученическият съвет е замислен да служи на  ученици и учители, като осъществява връзката между тях. Разрешава проблеми, провежда събития, разнообразява училищното ежедневие след обсъждане на седмичните срещи. Нашите ежегодни събития:</p>
+                                        @foreach (var par in paragraphs)
+                                        {
+                                            <p>@par</p>
+                                        }
                                         <ul class="flat-list">
-                                            <li>Коледен базар</li>
-                                            <li>Немската чете</li>
-                                            <li>9+1</li>
+                                            @foreach (var singleEvent in events)
+                                            {
+                                                <li>@singleEvent.Trim()</li>
+                                            }
                                         </ul>
                                     </div><!-- /.text-tab -->
                                     <div class="images-tab">
-                                        <img src="images/services/1.jpg" alt="images">
+                                        <img src="@Model.Images.ToList()[0].Path" alt="images">
                                     </div>
                                 </div><!-- /.content-inner -->
 

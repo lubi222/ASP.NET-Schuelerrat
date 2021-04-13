@@ -49,7 +49,7 @@ namespace Schuellerrat
             });
 
             services.AddTransient<IMailService, MailService>();
-            services.AddTransient<IClubListService, ClubListService>();
+            services.AddTransient<IClubsService, ClubsService>();
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IArticlesService, ArticlesService>();

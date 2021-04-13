@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Schuellerrat.Models
+﻿namespace Schuellerrat.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Image
     {
@@ -21,5 +18,10 @@ namespace Schuellerrat.Models
         public int? EventId { get; set; }
 
         public Event Event { get; set; }
+
+        public int? ClubId { get; set; }
+
+        [ForeignKey("ClubId")]
+        public Club Club { get; set; }
     }
 }

@@ -6,11 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Schuellerrat.Controllers
 {
+    using Services;
+
     public class SchoolController : Controller
     {
-        public IActionResult Index()
+        private readonly IArticlesService articlesService;
+
+        public SchoolController(IArticlesService articlesService)
         {
-            return this.View();
+            this.articlesService = articlesService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var schoolInfo = await this.articlesService.GetSchoolInfo();
+            return this.View(schoolInfo);
         }
     }
 }

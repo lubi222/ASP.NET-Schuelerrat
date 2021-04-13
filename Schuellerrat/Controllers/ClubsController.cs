@@ -11,9 +11,9 @@ namespace Schuellerrat.Controllers
 
     public class ClubsController : Controller
     {
-        private readonly IClubListService clubListService;
+        private readonly IClubsService clubListService;
 
-        public ClubsController(IClubListService clubListService)
+        public ClubsController(IClubsService clubListService)
         {
             this.clubListService = clubListService;
         }

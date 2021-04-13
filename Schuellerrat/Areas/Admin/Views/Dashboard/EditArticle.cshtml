@@ -19,7 +19,7 @@
         <div class="form-group">
             <h4>Заглавие</h4>
 
-            <input class="form-control" placeholder="@Model.Title" asp-for="@Model.Title">
+            <input class="form-control" asp-for="@Model.Title">
             <span class="text-danger" asp-validation-for="@Model.Title"></span>
         </div>
 
@@ -74,7 +74,7 @@
 
 @section Scripts{
     <script>
-        $(function() {
+        $(function () {
             $("#datepicker").datepicker({
                 autoclose: true,
                 todayHighlight: true,

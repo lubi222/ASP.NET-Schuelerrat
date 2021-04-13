@@ -3,14 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Club
+    public class Club : Content
     {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        public string Title { get; set; }
-        
         [Required]
         public string Leader { get; set; }
         
@@ -22,5 +16,6 @@
 
         public string ShortDescription { get; set; }
 
+        public ICollection<Image> Images { get; set; }
     }
 }
