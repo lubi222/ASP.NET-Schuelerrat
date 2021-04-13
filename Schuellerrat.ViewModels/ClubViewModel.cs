@@ -14,6 +14,8 @@
 
         public string Time { get; set; }
 
+        public string ShortDescription { get; set; }
+
         public ArticleViewModel Article { get; set; }
     }
 }

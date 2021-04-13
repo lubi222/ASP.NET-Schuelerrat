@@ -18,7 +18,7 @@
 
         public ICollection<Club> GetAll()
         {
-            return this.dbContext.Clubs.Include(x => x.Article).Include(x => x.Article.Paragraphs).Include(x => x.Article.Images).ToList();
+            return this.dbContext.Clubs.ToList();
         }
 
         public Club GetById(int id)

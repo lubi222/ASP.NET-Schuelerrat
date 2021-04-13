@@ -11,7 +11,7 @@
                     <h1 class="bold">Нашите събития</h1>
                 </div>
                 <div class=""style="width: 100%">
-                <div class="post-wrap clearfix row" style="width: 100%">
+                <div class="post-wrap clearfix row" style="width: 100%; margin: 0">
                  @foreach (var singleEvent in Model)
                  {
                       <article style="height: 500px;" class="post flat-hover-zoom col-md-4 mb-5" >
@@ -42,7 +42,7 @@
                             <li class="page-item @if (!(currentPage - 1 > 0)) { <text>disabled</text> }">
                                 <a class="page-link" asp-action="All" asp-route-id="@(currentPage-1)">«</a>
                             </li>
-                            @for (int i = currentPage - 4; i < currentPage; i++)
+                            @for (int i = currentPage - 2; i < currentPage; i++)
                             {
                                 if (i > 0)
                                 {
@@ -50,9 +50,9 @@
                                 }
                             }
                             <li class="active" style="padding: 0"><a class="" href="#">@currentPage</a></li>
-                            @for (int i = currentPage + 1; i <= currentPage + 4; i++)
+                            @for (int i = currentPage + 1; i <= currentPage + 2; i++)
                             {
-                                if (i <= pageCount+1)
+                                if (i <= pageCount)
                                 {
                                     <li class=""><a class="" asp-action="All" asp-route-id="@i">@i</a></li>
                                 }

@@ -5,55 +5,43 @@
     <div class="footer-widgets">
         <div class="container">
             <div class="row">
-
                 <div class="col-md-12">
-                    <div class="widget widget_tweets clearfix">
-                        <ul class="d-flex justify-content-between">
+
+                    <ul class="d-flex justify-content-around flex-wrap">
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
+                        </li>
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="Clubs" asp-action="Index">Извънкласни дейности</a>
+                        </li>
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="School" asp-action="Index">Училището</a>
+                        </li>
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="Classes" asp-action="Index">Паралелки</a>
+                        </li>
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="AboutUs" asp-action="Index">За нас</a>
+                        </li>
+                        <li>
+                            <a style="font-weight: bold; color: #aaa" asp-area="" asp-controller="Events" asp-action="All" asp-route-id="1">Събития</a>
+                        </li>
+
+                        @if (this.SignInManager.IsSignedIn(this.User))
+                        {
                             <li>
-                                <a href="#">About Us</a>
+                                <a style="font-weight: bold; color: #aaa" href="/Identity/Account/Logout">Logout</a>
                             </li>
+                        }
+                        else
+                        {
                             <li>
-                                <a href="#">Blog</a>
+                                <a style="font-weight: bold; color: #aaa" href="/Identity/Account/Login">Login</a>
                             </li>
-                            <li>
-                                <a href="#">Contact</a>
-                            </li>
-                            <li>
-                                <a href="#">Courses</a>
-                            </li>
-                            <li>
-                                <a href="#">FAQs</a>
-                            </li>
-                            <li>
-                                <a href="#">Events</a>
-                            </li>
-                            <li>
-                                <a href="#">Become a Teacher</a>
-                            </li>
-                            <li>
-                                <a href="#">Maintenance</a>
-                            </li>
-                            <li>
-                                <a href="#">Language Packs</a>
-                            </li>
-                            <li>
-                                <a href="#">LearnPress</a>
-                            </li>
-                            <li>
-                                <a href="#">Release Status</a>
-                            </li>
-                            <li>
-                                <a href="/Identity/Account/Login">Login</a>
-                            </li>
-                            @if (this.SignInManager.IsSignedIn(this.User))
-                            {
-                                <li>
-                                    <a href="/Identity/Account/Logout">Logout</a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                        }
+                    </ul>
                 </div>
+
             </div>
         </div>
     </div>

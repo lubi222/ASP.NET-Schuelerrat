@@ -9,7 +9,7 @@
     {
         public ICollection<AllContentViewModel> GetArticlesOnAdminPage();
 
-        public Task AddArticle(AddArticleInputModel input, string basePath);
+        public Task AddArticle(AddClubInputModel input, string basePath);
 
         public Task EditArticle(EditArticleInputModel input, string basePath);
 

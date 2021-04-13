@@ -28,19 +28,8 @@ namespace Schuellerrat.Controllers
                 MaxClass = x.MaxClass,
                 MinClass = x.MinClass,
                 Time = x.Time,
-                Article = new ArticleViewModel
-                {
-                    Title = x.Article.Title,
-                    Images = x.Article.Images.Select(i => new Schuellerrat.ViewModels.ImageViewModel()
-                    {
-                        Path = i.Path
-                    }).ToList(),
-                    Paragraphs = x.Article.Paragraphs.Select(p => new ParagraphViewModel
-                    {
-                        Title = p.Title,
-                        Content = p.Text
-                    }).ToList(),
-                }
+                ShortDescription = x.ShortDescription
+                
             }).ToList();
 
 

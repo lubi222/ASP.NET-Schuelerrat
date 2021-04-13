@@ -22,19 +22,7 @@
                 MaxClass = 11,
                 MinClass = 9,
                 Time = "1 път годишно",
-                Article = new Article
-                {
-                    CreatedOn = DateTime.Now,
-                    Title = "Jugend forscht",
-                    Paragraphs = new List<Paragraph>()
-                    {
-                        new Paragraph
-                        {
-                            Title = "1",
-                            Text = "Извънкласна дейност, организирана от Немския отдел. Могат да участват ученици от 10. клас нагоре.",
-                        }
-                    }
-                }
+                ShortDescription = "aspodifnaspdoifnapsdoifnpaisdofn"
             });
 
             await dbContext.SaveChangesAsync();

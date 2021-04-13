@@ -5,6 +5,7 @@
     var paragraphTitles = Model.ParagraphTitles;
     var images = Model.Images;
     var date = DateTime.ParseExact(Model.EventDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+    var CarouselImages = Model.Images.Skip(1);
 
 }
 
@@ -29,24 +30,26 @@
             </div><!-- /.container -->
         </div><!-- /page-title parallax -->
 
-        <section class="main-content blog-posts style-v1">
+        <section class="main-content blog-posts style-v1 pt-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md- col-sm-12 p-0">
                         <div class="blog-title-single">
-                            <h1 class="bold">@Model.Title</h1>
                             <article class="entry clearfix">
                                 <div class="entry-border">
                                     <div class="main-post">
                                         <div class="wrap-img">
-                                            <div class="entry-meta">
+                                            <div class="entry-meta pl-4">
                                                 <span class="date capitalized-date">@date.ToString("D", CultureInfo.CreateSpecificCulture("bg-BG"))</span>
                                             </div>
                                         </div>
-                                        <div class="feature-post">
-                                            <img style="width: 100%;" src="@Model.Images.ToList()[0].Path" alt="image">
-                                        </div><!-- /.feature-post -->
-                                        <div class="entry-content">
+                                        @if (@Model.Images.Any())
+                                        {
+                                            <div class="feature-post" style="padding: 0; width: 100%; height: 70vh; background: url('@Model.Images.ToList()[0].Path'); background-size: cover; background-repeat: no-repeat; background-position: center">
+                                                @*<img style="width: 100%; max-height: 50vh" src="@Model.Images.ToList()[0].Path" alt="image">*@
+                                            </div><!-- /.feature-post -->
+                                        }
+                                        <div class="entry-content pl-4 pr-4">
                                             @for (int i = 0; i < paragraphTexts.Count; i++)
                                             {
                                                 <h4>@paragraphTitles.ToList()[i]</h4>
@@ -65,69 +68,39 @@
 
 
 
-                    <div class="sidebar">
-                        <div class="widget widget-popular-news">
-                            <h5 class="widget-title">Recent posts</h5>
-                            <ul class="popular-news clearfix">
-                                <li>
-                                    <div class="thumb">
-                                        <img src="images/flickr/1.jpg" alt="image">
-                                    </div>
-                                    <div class="text">
-                                        <a href="#">New Chicago school budget relies on state pension</a>
-                                        <p>May 18, 2016</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="thumb">
-                                        <img src="images/flickr/2.jpg" alt="image">
-                                    </div>
-                                    <div class="text">
-                                        <a href="#">New Chicago school budget relies on state pension</a>
-                                        <p>May 18, 2016</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="thumb">
-                                        <img src="images/flickr/3.jpg" alt="image">
-                                    </div>
-                                    <div class="text">
-                                        <a href="#">New Chicago school budget relies on state pension</a>
-                                        <p>May 18, 2016</p>
-                                    </div>
-                                </li>
-                            </ul><!-- /popular-news clearfix -->
-                        </div><!-- /widget widget-popular-news -->
-                    </div><!-- /sidebar -->
-                    <section id="carousel-section" style="border: 1px solid yellow; width: 80%">
-                        <h2 class="descriptions"> Screenshots</h2>
-                        <div class="carousel slide" id="main-carousel" data-ride="carousel" style="border: 1px solid red; height: 500px">
-                            <ol class="carousel-indicators">
-                                <li data-target="#main-carousel" data-slide-to="0" class="active"></li>
-                                @for (int i = 1; i < Model.Images.Count; i++)
-                                {
-                                    <li data-target="#main-carousel" data-slide-to="@i"></li>
-                                }
-                            </ol>
-                            <div class="carousel-inner" style="height: 100%">
-                                @foreach (var image in Model.Images)
-                                {
+                    @if (CarouselImages.Any())
+                    {
 
-                                    <div class="carousel-item @(image == Model.Images.First() ? "active" : "")" style="border: 1px solid blue; background: url('@image.Path') no-repeat; background-size: cover; background-position: center; height: 100%">
-                                        @*<img style="height: 100%" src="@image.Path">*@
-                                    </div>
-                                }
+                        <section id="carousel-section" style="width: 100%">
+                            <h2 class="descriptions page-title-heading pl-4-" style="font-weight: bold ; font-family: Montserrat,">Снимки</h2>
+                            <div class="carousel slide" id="main-carousel" data-ride="carousel" style="height: 666px">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#main-carousel" data-slide-to="0" class="active"></li>
+                                    @for (int i = 1; i < Model.Images.Count; i++)
+                                    {
+                                        <li data-target="#main-carousel" data-slide-to="@i"></li>
+                                    }
+                                </ol>
+                                <div class="carousel-inner" style="height: 100%">
+                                    @foreach (var image in CarouselImages)
+                                    {
+
+                                        <div class="carousel-item @(image == CarouselImages.First() ? "active" : "")" style="border: 1px solid blue; background: url('@image.Path') no-repeat; background-size: cover; background-position: center; height: 100%">
+                                            @*<img style="height: 100%" src="@image.Path">*@
+                                        </div>
+                                    }
+                                </div>
+                                <a href="#main-carousel" class="carousel-control-prev" data-slide="prev">
+                                    <span class="carousel-control-prev-icon"></span>
+                                    <span class="sr-only" aria-hidden="true">Prev</span>
+                                </a>
+                                <a href="#main-carousel" class="carousel-control-next" data-slide="next">
+                                    <span class="carousel-control-next-icon"></span>
+                                    <span class="sr-only" aria-hidden="true">Next</span>
+                                </a>
                             </div>
-                            <a href="#main-carousel" class="carousel-control-prev" data-slide="prev">
-                                <span class="carousel-control-prev-icon"></span>
-                                <span class="sr-only" aria-hidden="true">Prev</span>
-                            </a>
-                            <a href="#main-carousel" class="carousel-control-next" data-slide="next">
-                                <span class="carousel-control-next-icon"></span>
-                                <span class="sr-only" aria-hidden="true">Next</span>
-                            </a>
-                        </div>
-                    </section>
+                        </section>
+                    }
                 </div><!-- /row -->
             </div><!-- /container -->
         </section><!-- /main-content -->

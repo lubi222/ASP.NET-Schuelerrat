@@ -54,6 +54,12 @@
 
         public ICollection<AllEventsViewModel> GetEventsOnAllPage(int currentPage)
         {
+            var maxPages = this.GetMaxPages();
+            if (currentPage <= 0 || currentPage > maxPages)
+            {
+                return null;
+            }
+            
             return this.dbContext
                 .Events
                 .Select(x => new AllEventsViewModel
@@ -149,7 +155,7 @@
 
         private decimal GetMaxPages()
         {
-            decimal maxPages = this.dbContext.Events.Count() / eventsPerPage;
+            decimal maxPages = (decimal)this.dbContext.Events.Count() / eventsPerPage;
             return Math.Ceiling(maxPages);
         }
 

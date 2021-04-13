@@ -1,68 +1,60 @@
 ﻿        <!-- Header -->
-        <header id="header" class="header">
-            <div class="container">
-                <div class="header-wrap clearfix">
-                    <div id="logo" class="logo">
-                        <a href="index.html" rel="home">
-                            <img src="/images/logo.png" alt="image" />
-                        </a>
-                    </div>
-                    <!-- /.logo -->
-                    <div class="nav-wrap">
-                        <div class="btn-menu">
-                            <span></span>
-                        </div>
-                        <!-- //mobile menu button -->
-                        <nav id="mainnav" class="mainnav">
-                            <ul class="menu">
-                                <li class="home">
-                                    <a href="/">Начало</a>
-                                </li>
-                                <li class="has-sub">
-                                    <a>Информация</a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="/Clubs">Извънкласни дейности</a>
-                                        </li>
-                                        <li>
-                                            <a href="/School">Училището</a>
-                                        </li>
-                                        <li>
-                                            <a href="/Classes">Паралелки и профили</a>
-                                            <ul>
-                                                <li>
-
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="/CoursesSingle">...</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.submenu -->
-                                </li>
-                                <li><a href="/AboutUs">За нас</a></li>
-                                <li>
-                                    <a asp-controller="Events" asp-action="All" asp-route-id="1">Събития</a>
-                                    <!-- /.submenu -->
-                                </li>
-                                <li><a href="/Contact/ContactForm">Контакт</a></li>
-                                @if (this.User.IsInRole("admin"))
-                                {
-                                    <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Админ</a></li>
-                                }
-                                @*<li>
-            <a href="/BlogSingle"
-            >Blog single</a
-            >
-        </li>*@
-                            </ul>
-                            <!-- /.menu -->
-                        </nav>
-                        <!-- /.mainnav -->
-                    </div>
-                    <!-- /.nav-wrap -->
-                </div>
-                <!-- /.header-inner -->
+<header id="header" class="header">
+    <div class="container">
+        <div class="header-wrap clearfix">
+            <div id="logo" class="logo">
+                <a href="index.html" rel="home">
+                    <img src="/images/logo.png" alt="image" />
+                </a>
             </div>
-        </header>
+            <!-- /.logo -->
+            <div class="nav-wrap">
+                <div class="btn-menu">
+                    <span></span>
+                </div>
+                <!-- //mobile menu button -->
+                <nav id="mainnav" class="mainnav">
+                    <ul class="menu">
+                        <li class="home">
+                            <a href="/">Начало</a>
+                        </li>
+                        <li class="has-sub">
+                            <a>Информация</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="/Clubs">Извънкласни дейности</a>
+                                </li>
+                                @*<li>
+                                        <a href="/School">Училището</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Classes">Паралелки и профили</a>
+                                    </li>*@
+                            </ul>
+                            <!-- /.submenu -->
+                        </li>
+                        <li><a href="/AboutUs">За нас</a></li>
+                        <li>
+                            <a asp-area="" asp-controller="Events" asp-action="All" asp-route-id="1">Събития</a>
+                            <!-- /.submenu -->
+                        </li>
+                        <li><a href="/Contact/ContactForm">Контакт</a></li>
+                        @if (this.User.IsInRole("admin"))
+                        {
+                            <li><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Админ</a></li>
+                        }
+                        @*<li>
+                                <a href="/BlogSingle"
+                                >Blog single</a
+                                >
+                            </li>*@
+                    </ul>
+                    <!-- /.menu -->
+                </nav>
+                <!-- /.mainnav -->
+            </div>
+            <!-- /.nav-wrap -->
+        </div>
+        <!-- /.header-inner -->
+    </div>
+</header>

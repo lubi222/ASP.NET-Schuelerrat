@@ -35,57 +35,56 @@
                     <div class="blog-title clearfix">
                         <h1 class="bold">Извънкласни дейности</h1>
                     </div>
-                    <div class="row">
-                        <div class="post-warp clearfix">
-                            <div class="flat-course flat-hover-zoom">
-                                <div class="featured-post">
-                                    <div class="overlay">
-                                        <div class="link"></div>
-                                    </div>
-                                </div>
+                    <div class="row" style="margin: 0px">
+                        <div class="post-warp clearfix col-md-12 p-0" style="width: 100%; ">
+                            <div class="flat-course flat-hover-zoom" style="width: 100%;">
+                                
                                 <!-- /.featured-post -->
+                                <div class="row m-0 p-0" style=" width: 100%;">
 
-                                @foreach (var club in Model)
-                                {
-                                    <div class="course-content" style="padding-top: 25px;">
-                                        <h4>
-                                            <a href="courses-single.html">@club.Title</a>
-                                        </h4>
-                                        <ul class="course-meta review clearfix">
-                                            <li class="author">
-                                                <div class="thumb">
-                                                    <img src="images/flickr/4.jpg"
-                                                         alt="image" />
+                                    @foreach (var club in Model)
+                                    {
+                                        <div class="col-md-3">
+                                            <div class="course-content border-top" style="padding-top: 25px;">
+                                                <h4>
+                                                    <span>@club.Title</span>
+                                                </h4>
+                                                <ul class="course-meta review clearfix">
+                                                    <li class="author">
+                                                        <div class="thumb">
+                                                            <img src="images/flickr/4.jpg"
+                                                                 alt="image" />
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="mb-4">
+                                                    @club.ShortDescription
                                                 </div>
-                                            </li>
-                                        </ul>
-                                        <div class="mb-4">
-                                            @club.Article.Paragraphs.ToList()[0].Content
+                                                <ul class="list-group-flush">
+                                                    <li class="list-group-item">
+                                                        <span>Кога<br></span>
+                                                        <span>@club.Time</span>
+                                                    </li>
+
+                                                    <li class="list-group-item">
+                                                        <span>За кого<br></span>
+                                                        <span>@club.MinClass. - @club.MaxClass. клас</span>
+                                                    </li>
+
+                                                    <li class="list-group-item">
+                                                        <span>Отговорник<br></span>
+                                                        <span>@club.Leader</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <ul class="list-group-flush">
-                                            <li class="list-group-item">
-                                                <span>Кога<br></span>
-                                                <span>@club.Time</span>
-                                            </li>
-
-                                            <li class="list-group-item">
-                                                <span>За кого<br></span>
-                                                <span>@club.MinClass. - @club.MaxClass. клас</span>
-                                            </li>
-
-                                            <li class="list-group-item">
-                                                <span>Отговорник<br></span>
-                                                <span>@club.Leader</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                }
+                                    }
+                                </div>
                                 <!-- /.course-content -->
                             </div>
                         </div>
 
                         <!-- / .post-wrap -->
-                        
                         @* PAGINATION *@
 
                         <!--<div class="blog-pagination">
@@ -97,7 +96,7 @@
                                     <a href="#">Next</a>
                                 </li>
                             </ul>-->
-                            <!-- /.flat-pagination -->
+                        <!-- /.flat-pagination -->
                         <!--</div>-->
                     </div>
                     <!-- /row -->

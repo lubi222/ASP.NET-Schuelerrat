@@ -1,4 +1,6 @@
-﻿namespace Schuellerrat.Controllers
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+
+namespace Schuellerrat.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Services;
@@ -14,7 +16,14 @@
         public IActionResult All(int id)
         {
             var events = this.eventsService.GetEventsOnAllPage(id);
-            return this.View(events);
+            if (events == null)
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                return this.View(events);
+            }
         }
 
         public IActionResult Details(int id)

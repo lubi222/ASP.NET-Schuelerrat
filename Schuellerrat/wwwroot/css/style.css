@@ -1752,15 +1752,7 @@ article.post .entry-meta p {
         margin-bottom: 26px;
     }
 
-        .content-post .entry-content:before {
-            position: absolute;
-            left: 0;
-            bottom: -13px;
-            width: 30px;
-            height: 2px;
-            content: "";
-            background-color: #333;
-        }
+
 
 .main-content.blog-posts .entry-meta.style1 span {
     margin-right: 0;

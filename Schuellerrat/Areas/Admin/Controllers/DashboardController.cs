@@ -129,7 +129,7 @@
 
         [Authorize(Roles = "admin")]
         [HttpPost]
-        public async Task<IActionResult> AddArticle(AddArticleInputModel input)
+        public async Task<IActionResult> AddArticle(AddClubInputModel input)
         {
             if (!ModelState.IsValid)
             {

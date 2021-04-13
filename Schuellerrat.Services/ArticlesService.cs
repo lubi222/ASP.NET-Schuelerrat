@@ -37,18 +37,15 @@
                 .ToList();
         }
 
-        public async Task AddArticle(AddArticleInputModel input, string basePath)
+        public async Task AddArticle(AddClubInputModel input, string basePath)
         {
-            await this.dbContext.Articles.AddAsync(new Article()
+            await this.dbContext.Clubs.AddAsync(new Club()
             {
                 Title = input.Title,
-                Paragraphs = input.Paragraphs?.Select(p => new Paragraph
-                {
-                    Title = p.Title,
-                    Text = p.Content,
-                }).ToList(),
-                CreatedOn = DateTime.Now,
-                Images = input.Images != null ? await this.cloudinaryService.UploadAsync(input.Images, basePath) : null
+                ShortDescription = input.Description,
+                Leader = input.Leader,
+                MaxClass = input.MaxClass,
+                MinClass = input.MinClass,
             });
             await this.dbContext.SaveChangesAsync();
         }
