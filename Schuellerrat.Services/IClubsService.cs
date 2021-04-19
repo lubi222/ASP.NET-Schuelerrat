@@ -8,7 +8,7 @@
 
     public interface IClubsService
     {
-        public ICollection<Club> GetAll();
+        public ICollection<ClubViewModel> GetAll();
 
         public Club GetById(int id);
 

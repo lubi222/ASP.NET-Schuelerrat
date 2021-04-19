@@ -3,6 +3,10 @@
 @using Schuellerrat.InputModels
 @model Schuellerrat.InputModels.EditArticleInputModel
 
+@{
+    this.ViewData["Title"] = "Промени статия";
+}
+
 <div class="container">
     @if (this.TempData.ContainsKey("message"))
     {

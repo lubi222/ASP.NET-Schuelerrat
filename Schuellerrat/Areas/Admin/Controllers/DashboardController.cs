@@ -1,4 +1,7 @@
-﻿namespace Schuellerrat.Areas.Admin.Controllers
+﻿using System;
+using System.Globalization;
+
+namespace Schuellerrat.Areas.Admin.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -83,6 +86,7 @@
                     Path = x.Path,
                     Id = x.Id
                 }).ToList(),
+                EventDate = DateTime.ParseExact(oldEvent.EventDate, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 BonusParagraphsCount = bonusId+1,
                 Paragraphs = filledParagraphs,
                 ParagraphTitles = oldEvent.ParagraphTitles,

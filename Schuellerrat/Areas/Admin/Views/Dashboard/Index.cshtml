@@ -77,24 +77,21 @@
                 <td>@club.Title</td>
                 <td>@club.CreatedOn</td>
                 <td>
-                    <a href="#">
-                        <button class="btn btn-primary">Страница</button>
-                    </a>
                     <a asp-area="Admin" asp-controller="Dashboard" asp-action="EditClub" asp-route-id="@club.Id">
                         <button class="btn btn-warning">Промяна</button>
                     </a>
 
                     @* DELETE BUTTON AND MODAL *@
 
-                    <a data-toggle="modal" data-id="@club.Id" title="Add this item" class="open-AddCrabDialog" href="#addCrabDialog"><button class="btn btn-danger">Изтриване</button></a>
+                    <a data-toggle="modal" data-id="@club.Id" title="Add this item" class="open-AddPunkDialog" href="#addPunkDialog"><button class="btn btn-danger">Изтриване</button></a>
 
 
-                    <div class="modal hide" id="addCrabDialog">
+                    <div class="modal hide" id="addPunkDialog">
 
                         <div class="modal-body">
                             <h3>Потвърдете изтриването</h3>
                             <button data-dismiss="modal" class="btn btn-primary">Отказ</button>
-                            <a id="crabId">
+                            <a id="punkId">
                                 <button class="btn btn-danger">Изтриване</button>
                             </a>
                         </div>
@@ -132,15 +129,15 @@
 
                         @* DELETE BUTTON AND MODAL *@
 
-                        <a data-toggle="modal" data-id="@singleEvent.Id" title="Add this item" class="open-AddCrabDialog" href="#addCrabDialog"><button class="btn btn-danger">Изтриване</button></a>
+                        <a data-toggle="modal" data-id="@singleEvent.Id" title="Add this item" class="open-AddBookDialog" href="#addBookDialog"><button class="btn btn-danger">Изтриване</button></a>
 
 
-                        <div class="modal hide" id="addCrabDialog">
+                        <div class="modal hide" id="addBookDialog">
 
                             <div class="modal-body">
                                 <h3>Потвърдете изтриването</h3>
                                 <button data-dismiss="modal" class="btn btn-primary">Отказ</button>
-                                <a id="crabId">
+                                <a id="bookId">
                                     <button class="btn btn-danger">Изтриване</button>
                                 </a>
                             </div>
@@ -170,6 +167,12 @@
         $(document).on("click", ".open-AddCrabDialog", function () {
             var myCrabId = $(this).data('id');
             $(".modal-body #crabId").attr("href", "/Admin/Dashboard/DeleteArticle/" + myCrabId.toString());
+
+        });
+
+        $(document).on("click", ".open-AddPunkDialog", function () {
+            var myPunkId = $(this).data('id');
+            $(".modal-body #punkId").attr("href", "/Admin/Dashboard/DeleteClub/" + myPunkId.toString());
 
         });
 

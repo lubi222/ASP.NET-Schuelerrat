@@ -5,6 +5,10 @@
 
     public class Club : Content
     {
+        public Club()
+        {
+            this.Images = new HashSet<Image>();
+        }
         [Required]
         public string Leader { get; set; }
         

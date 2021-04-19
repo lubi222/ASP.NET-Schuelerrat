@@ -1,6 +1,10 @@
 ﻿@using System.Linq
 @model Schuellerrat.InputModels.AddEventInputModel
 
+@{
+    this.ViewData["Title"] = "Добави събитие";
+}
+
 <div class="container">
     <h2 class="mb-5">Добави събитие</h2>
     <form autocomplete="off" asp-controller="Dashboard" asp-action="AddEvent" method="post" enctype="multipart/form-data">
@@ -14,7 +18,7 @@
 
         <div class="input-group date d-flex mb-5" data-provide="datepicker">
             <h4>Дата на провеждане</h4>
-            <input  type="text" class="form-control" asp-for="EventDate" style="width: 90%">
+            <input type="text" class="form-control" asp-for="EventDate" style="width: 90%">
             <span class="text-danger" asp-validation-for="EventDate"></span>
             <div onclick="logDate()" class="input-group-addon text-center d-flex justify-content-center align-items-center" style="border-radius: 0px; border: none; margin-left: 1rem">
                 <i class="fas fa-chevron-down"></i>
@@ -23,7 +27,7 @@
 
         <div class="form-group mb-5">
             <h4>Изображения</h4>
-            <input autocomplete="off" asp-for="Images" class="form-control"/>
+            <input autocomplete="off" asp-for="Images" class="form-control" />
             <span asp-validation-for="Images" class="text-danger"></span>
         </div>
 

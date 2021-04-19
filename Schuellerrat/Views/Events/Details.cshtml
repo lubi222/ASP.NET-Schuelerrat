@@ -6,7 +6,7 @@
     var images = Model.Images;
     var date = DateTime.ParseExact(Model.EventDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
     var CarouselImages = Model.Images.Skip(1);
-
+    this.ViewData["Title"] = "Събитие";
 }
 
 <body class="header-sticky">

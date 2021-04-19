@@ -28,6 +28,16 @@
         {
             base.OnModelCreating(modelBuilder);
             //Fluent API
+            modelBuilder.Entity<Club>()
+                .HasMany(c => c.Images)
+                .WithOne(i => i.Club)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Article>()
+                .HasMany(c => c.Images)
+                .WithOne(i => i.Article)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Event>()
                 .HasMany(x => x.Images)
                 .WithOne(x => x.Event)

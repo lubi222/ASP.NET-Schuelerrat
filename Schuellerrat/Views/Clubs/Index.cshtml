@@ -1,5 +1,9 @@
 ﻿@model ICollection<Schuellerrat.ViewModels.ClubViewModel>
 
+@{
+    this.ViewData["Title"] = "Извънкласни дейности";
+}
+
 <body class="header-sticky">
     <div class="boxed">
         <main>
@@ -38,22 +42,23 @@
                     <div class="row" style="margin: 0px">
                         <div class="post-warp clearfix col-md-12 p-0" style="width: 100%; ">
                             <div class="flat-course flat-hover-zoom" style="width: 100%;">
-                                
+
                                 <!-- /.featured-post -->
                                 <div class="row m-0 p-0" style=" width: 100%;">
 
                                     @foreach (var club in Model)
                                     {
-                                        <div class="col-md-3">
-                                            <div class="course-content border-top" style="padding-top: 25px;">
-                                                <h4>
+                                        <div class="col-md-6">
+                                            <div class="course-content border-top mt-5" style="padding-top: 25px;">
+                                            <img src="@club.ImageUrl" alt="Alternate Text" />
+                                                <h4 style="margin-top: 2rem">
                                                     <span>@club.Title</span>
                                                 </h4>
                                                 <ul class="course-meta review clearfix">
                                                     <li class="author">
                                                         <div class="thumb">
                                                             <img src="images/flickr/4.jpg"
-                                                                 alt="image" />
+                                                                 alt="image"/>
                                                         </div>
                                                     </li>
                                                 </ul>

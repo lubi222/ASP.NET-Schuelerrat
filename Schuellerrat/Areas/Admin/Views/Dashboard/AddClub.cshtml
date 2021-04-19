@@ -1,6 +1,10 @@
 ﻿@using System.Linq
 @model Schuellerrat.InputModels.AddClubInputModel
 
+@{
+    this.ViewData["Title"] = "Добави извънкласна дейност";
+}
+
 <div class="container">
     <h2 class="mb-5">Добави клуб</h2>
     <form autocomplete="off" asp-controller="Dashboard" asp-action="AddClub" method="post" enctype="multipart/form-data">

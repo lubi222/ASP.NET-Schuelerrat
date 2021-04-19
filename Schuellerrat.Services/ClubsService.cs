@@ -1,4 +1,6 @@
-﻿namespace Schuellerrat.Services
+﻿using System;
+
+namespace Schuellerrat.Services
 {
     using System.Collections.Generic;
     using System.Globalization;
@@ -25,9 +27,22 @@
             this.cloudinaryService = cloudinaryService;
         }
 
-        public ICollection<Club> GetAll()
+        public ICollection<ClubViewModel> GetAll()
         {
-            return this.dbContext.Clubs.ToList();
+            var dbClubs = this.dbContext.Clubs.Include(c => c.Images).ToList();
+            var viewClubs = dbClubs.Select(x => new ClubViewModel
+            {
+                Title = x.Title,
+                Leader = x.Leader,
+                MaxClass = x.MaxClass,
+                MinClass = x.MinClass,
+                Time = x.Time,
+                ImageUrl =  x.Images.Any() ? x.Images.ToList()[0].Path : this.dbContext.Images.FirstOrDefault().Path,
+                ShortDescription = x.ShortDescription
+
+            }).ToList();
+
+            return viewClubs;
         }
 
         public Club GetById(int id)
@@ -37,14 +52,21 @@
 
         public async Task AddClubAsync(AddClubInputModel input, string basePath)
         {
-            await this.dbContext.Clubs.AddAsync(new Club()
+
+            var clubToAdd = new Club()
             {
                 Title = input.Title,
                 ShortDescription = input.Description,
                 Leader = input.Leader,
                 MaxClass = input.MaxClass,
                 MinClass = input.MinClass,
-            });
+                CreatedOn = DateTime.Now,
+                Time = input.Time,
+                Images = input.Cover == null ? null : await this.cloudinaryService.UploadAsync(new List<IFormFile>() { input.Cover }, basePath),
+            };
+
+            await this.dbContext.Clubs.AddAsync(clubToAdd);
+
             await this.dbContext.SaveChangesAsync();
         }
 
@@ -54,6 +76,16 @@
 
             if (input.Cover != null)
             {
+                var dbImagesToDelete = dbContext.Images.Where(i => i.ClubId == input.Id).ToList();
+                if (dbImagesToDelete.Any())
+                {
+                    await this.cloudinaryService.DeleteImagesAsync(this.cloudinary,
+                        dbImagesToDelete.Select(dbi => dbi.Path).ToArray());
+                    dbContext.Images.RemoveRange(dbImagesToDelete);
+                    await dbContext.SaveChangesAsync();
+                }
+
+
                 var images = await this.cloudinaryService.UploadAsync(new List<IFormFile>() { input.Cover }, basePath);
                 oldClub.Images = images;
             }
@@ -69,7 +101,7 @@
 
         public ICollection<AllContentViewModel> GetClubsOnAllPage()
         {
-            return this.GetAll().Select(x => new AllContentViewModel
+            return this.dbContext.Clubs.Select(x => new AllContentViewModel
             {
                 Id = x.Id,
                 Title = x.Title,
@@ -81,7 +113,7 @@
         {
             var clubToRemove = await this.dbContext.Clubs.FirstOrDefaultAsync(i => i.Id == id);
 
-            if (clubToRemove.Images.FirstOrDefault() != null)
+            if (clubToRemove.Images.Any())
             {
                 var imagePaths = clubToRemove.Images.Select(x => x.Path).ToList();
                 await this.cloudinaryService.DeleteImagesAsync(cloudinary, imagePaths.ToArray());

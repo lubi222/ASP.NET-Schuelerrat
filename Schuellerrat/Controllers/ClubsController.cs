@@ -20,19 +20,7 @@ namespace Schuellerrat.Controllers
 
         public IActionResult Index()
         {
-            var dbClubs = clubListService.GetAll().ToList();
-            var viewClubs = dbClubs.Select(x => new ClubViewModel
-            {
-                Title = x.Title,
-                Leader = x.Leader,
-                MaxClass = x.MaxClass,
-                MinClass = x.MinClass,
-                Time = x.Time,
-                ShortDescription = x.ShortDescription
-                
-            }).ToList();
-
-
+            var viewClubs = clubListService.GetAll().ToList();
             return this.View(viewClubs);
         }
     }

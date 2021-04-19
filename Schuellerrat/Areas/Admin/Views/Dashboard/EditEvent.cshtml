@@ -3,6 +3,9 @@
 @using Schuellerrat.InputModels
 @model Schuellerrat.InputModels.EditEventInputModel
 
+@{
+    this.ViewData["Title"] = "Промени събитие";
+}
 <div class="container">
     @if (this.TempData.ContainsKey("message"))
     {

@@ -2,10 +2,10 @@
 <header id="header" class="header">
     <div class="container">
         <div class="header-wrap clearfix">
-            <div id="logo" class="logo">
-                <a href="index.html" rel="home">
-                    <img src="https://res.cloudinary.com/dvd0roy3a/image/upload/v1618318771/logo.png" alt="image" />
-                </a>
+            <div style="height: 0px; margin: 0px" id="logo" class="logo">
+                <!--<a asp-controller="Home" asp-action="Index" rel="home">-->
+                    @*<img src="https://res.cloudinary.com/dvd0roy3a/image/upload/v1618318771/logo.png" alt="image" />*@
+                <!--</a>-->
             </div>
             <!-- /.logo -->
             <div class="nav-wrap">
@@ -15,6 +15,11 @@
                 <!-- //mobile menu button -->
                 <nav id="mainnav" class="mainnav">
                     <ul class="menu">
+                        <li style="height: 8rem">
+                            <a asp-controller="Home" asp-action="Index" style="height: 100%">
+                                <img style="height: 100%; margin-left: 2rem; margin-right: 2rem" src="https://res.cloudinary.com/dvd0roy3a/image/upload/v1618318771/logo.png" alt="image" />
+                            </a>
+                        </li>
                         <li class="home">
                             <a href="/">Начало</a>
                         </li>
@@ -25,11 +30,11 @@
                                     <a href="/Clubs">Извънкласни дейности</a>
                                 </li>
                                 <li>
-                                        <a href="/School">Училището</a>
-                                    </li>
-                                    <li>
-                                        <a href="/Classes">Паралелки и профили</a>
-                                    </li>
+                                    <a href="/School">Училището</a>
+                                </li>
+                                <li>
+                                    <a href="/Classes">Паралелки и профили</a>
+                                </li>
                             </ul>
                             <!-- /.submenu -->
                         </li>

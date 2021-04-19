@@ -1,6 +1,10 @@
 ﻿@using System.Linq
 @model Schuellerrat.InputModels.AddArticleInputModel
 
+@{
+    this.ViewData["Title"] = "Добави статия";
+}
+
 <div class="container">
     <h2 class="mb-5">Добави статия</h2>
     <form autocomplete="off" asp-controller="Dashboard" asp-action="AddArticle" method="post" enctype="multipart/form-data">

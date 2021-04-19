@@ -70,7 +70,7 @@
                     EventDate = x.EventDate,
                     CurrentPage = currentPage,
                     PageCount = (int)this.GetMaxPages(),
-                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault().Path : this.dbContext.Images.FirstOrDefault(i => i.Id == 1).Path,
+                    Cover = x.Images.Count != 0 ? x.Images.FirstOrDefault().Path : this.dbContext.Images.FirstOrDefault(i => i.Id == 25).Path,
                     Month = x.EventDate.Month.ToString(CultureInfo.CreateSpecificCulture("bg-BG").DateTimeFormat.AbbreviatedMonthNames[x.EventDate.Month - 1]),
                     ShortDescription = x.Paragraphs.Any() != true ? null : GetShortDescription(x.Paragraphs.FirstOrDefault().Text),
                 }).Skip((currentPage - 1) * eventsPerPage).Take(eventsPerPage).ToList();
@@ -164,9 +164,24 @@
 
         private static string GetShortDescription(string desc)
         {
-            //string tempDesc = string.Join(" ", desc.Split().Take(15)).Substring(0, 1); // TODO: change to something higher when deploying
-            //string subTempDesc = tempDesc.Substring(0, tempDesc.LastIndexOf(' ') == -1 ? 2 : tempDesc.LastIndexOf(' '));
-            return "testDescr";
+            int maxCharCount = 50;
+            int charCount = 0;
+
+            var words = new Queue<string>(desc.Split(' ').ToList());
+
+            string tempDesc = String.Empty;
+
+            while (charCount < maxCharCount)
+            {
+                charCount += words.Peek().Length;
+                tempDesc += words.Dequeue() + " ";
+
+                if (words.Count == 0)
+                {
+                    break;
+                }
+            }
+            return tempDesc;
         }
     }
 }
