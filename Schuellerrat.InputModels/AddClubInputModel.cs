@@ -10,6 +10,7 @@
         [Required]
         public string Title { get; set; }
 
+        [Required]
         public string Leader { get; set; }
 
         public int? MaxClass { get; set; }
